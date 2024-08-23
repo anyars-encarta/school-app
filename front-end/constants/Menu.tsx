@@ -1,4 +1,4 @@
-const menuItems = [
+export const menuItems = [
   {
     title: "MENU",
     items: [
