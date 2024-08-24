@@ -17,7 +17,7 @@ const Announcement = () => {
                             <span className='text-gray-400 text-xs bg-white p-1 rounded-md'>{announcement.date}</span>
                         </div>
 
-                        <p className='truncate mt-1 text-gray-400 text-sm'>{announcement.description}</p>
+                        <p className='line-clamp-2 mt-1 text-gray-400 text-sm'>{announcement.description}</p>
                     </div>
                 ))}
             </div>
