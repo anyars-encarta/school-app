@@ -1,6 +1,5 @@
 'use client';
 
-import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { LineChartData } from '@/constants/chart';
 import Image from 'next/image'
