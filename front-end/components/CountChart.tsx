@@ -1,6 +1,6 @@
 'use client';
 
-import { data } from '@/constants/chart';
+import { PieChartData } from '@/constants/chart';
 import Image from 'next/image';
 import React, { PureComponent } from 'react';
 import { RadialBarChart, RadialBar, Legend, ResponsiveContainer } from 'recharts';
@@ -17,7 +17,7 @@ const CountChart = () => {
       {/* CHART */}
       <div className='relative w-full h-[75%]'>
         <ResponsiveContainer>
-          <RadialBarChart cx="50%" cy="50%" innerRadius="40%" outerRadius="100%" barSize={32} data={data}>
+          <RadialBarChart cx="50%" cy="50%" innerRadius="40%" outerRadius="100%" barSize={32} data={PieChartData}>
             <RadialBar
               background
               dataKey="count"
