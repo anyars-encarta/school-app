@@ -10,7 +10,7 @@ const Announcement = () => {
             </div>
 
             <div className='flex flex-col gap-4 mt-4'>
-                {announcementsData.map((announcement) => (
+                {announcementsData.slice(0, 3).map((announcement) => (
                     <div key={announcement.id} className='p-4 rounded-md border-2 odd:bg-encSkyLight even:bg-encPurpleLight'>
                         <div className='flex items-center justify-between'>
                             <h2 className='font-semibold text-gray-600'>{announcement.title}</h2>

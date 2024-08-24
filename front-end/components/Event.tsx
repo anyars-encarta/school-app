@@ -12,7 +12,7 @@ const Event = () => {
             </div>
 
             <div className='flex flex-col gap-4'>
-                {eventsData.map((event) => (
+                {eventsData.slice(0, 3).map((event) => (
                     <div key={event.id} className='p-5 rounded-md border-2 border-gray-100 border-t-4 odd:border-t-encSky even:border-t-encPurple'>
                         <div className='flex items-center justify-between'>
                             <h2 className='font-semibold text-gray-600'>{event.title}</h2>
