@@ -19,12 +19,12 @@ const ClassesList = () => {
                 <div className='flex items-center gap-2'>
                     {role === 'admin' && (
                         <>
-                            <Link href={`/list/teachers/${item.id}`}>
+                            {/* <Link href={`/list/teachers/${item.id}`}> */}
                                 {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/update.png' alt='' width={16} height={16} />
                                 </button> */}
                                 <FormModal table='class' type='update' data={item} />
-                            </Link>
+                            {/* </Link> */}
 
 
                             {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>

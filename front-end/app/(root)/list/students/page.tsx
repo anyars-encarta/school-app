@@ -34,12 +34,12 @@ const StudentList = () => {
                 <div className='flex items-center gap-2'>
                     {role === 'admin' && (
                         <>
-                            <Link href={`/list/students/${item.id}`}>
+                            {/* <Link href={`/list/students/${item.id}`}> */}
                                 {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/view.png' alt='' width={16} height={16} />
                                 </button> */}
                                 <FormModal table='student' type='update' data={item} />
-                            </Link>
+                            {/* </Link> */}
 
 
                             {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
