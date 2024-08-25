@@ -132,3 +132,24 @@ export const classColumns = [
         accessor: 'actions',
     },
 ];
+
+export const lessonColumns = [
+    {
+        header: 'Subject Name',
+        accessor: 'name'
+    },
+    {
+        header: 'Class',
+        accessor: 'class',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Teacher',
+        accessor: 'teacher',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];

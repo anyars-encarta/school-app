@@ -45,6 +45,13 @@ declare type ClassesParams = {
     supervisor: string;
 };
 
+declare type LessonsParams = {
+    id: string;
+    subject: string;
+    class: string;
+    teacher: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
