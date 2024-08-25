@@ -1,5 +1,5 @@
 declare type TeacherParams = {
-    id: string;
+    id: number;
     teacherId: string;
     name: string;
     email?: string;
@@ -11,7 +11,7 @@ declare type TeacherParams = {
 };
 
 declare type StudentParams = {
-    id: string;
+    id: number;
     studentId: string;
     name: string;
     email?: string;
@@ -23,7 +23,7 @@ declare type StudentParams = {
 };
 
 declare type ParentParams = {
-    id: string;
+    id: number;
     name: string;
     students: string[];
     email?: string;
@@ -32,13 +32,13 @@ declare type ParentParams = {
 };
 
 declare type SubjectParams = {
-    id: string;
+    id: number;
     name: string;
     teachers: string[];
 }
 
 declare type ClassesParams = {
-    id: string;
+    id: number;
     name: string;
     capacity: string;
     grade: string;
@@ -46,14 +46,14 @@ declare type ClassesParams = {
 };
 
 declare type LessonsParams = {
-    id: string;
+    id: number;
     subject: string;
     class: string;
     teacher: string;
 };
 
 declare type ExamsParams = {
-    id: string;
+    id: number;
     subject: string;
     class: string;
     teacher: string;
@@ -61,7 +61,7 @@ declare type ExamsParams = {
 };
 
 declare type AssignmentsParams = {
-    id: string;
+    id: number;
     subject: string;
     class: string;
     teacher: string;
@@ -69,7 +69,7 @@ declare type AssignmentsParams = {
 };
 
 declare type ResultsParams = {
-    id: string;
+    id: number;
     subject: string;
     class: string;
     teacher: string;
@@ -80,7 +80,7 @@ declare type ResultsParams = {
 };
 
 declare type EventsParams = {
-    id: string;
+    id: number;
     title: string;
     description: string;
     class: string;
@@ -90,7 +90,7 @@ declare type EventsParams = {
 };
 
 declare type AnnouncementsParams = {
-    id: string;
+    id: number;
     title: string;
     description: string;
     class: string;
