@@ -52,6 +52,14 @@ declare type LessonsParams = {
     teacher: string;
 };
 
+declare type ExamsParams = {
+    id: string;
+    subject: string;
+    class: string;
+    teacher: string;
+    date: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
