@@ -1,5 +1,5 @@
 import Pagination from '@/components/Pagination'
-import ClassTable from '@/components/ClassTable';
+import ClassTable from '@/components/tables/ClassTable';
 import TableSearch from '@/components/TableSearch'
 import { role, classesData } from '@/lib/data'
 import Image from 'next/image'

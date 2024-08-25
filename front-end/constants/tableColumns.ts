@@ -237,3 +237,33 @@ export const resultsColumns = [
         accessor: 'actions',
     },
 ];
+
+export const eventsColumns = [
+    {
+        header: 'Title',
+        accessor: 'title'
+    },
+    {
+        header: 'Class',
+        accessor: 'class',
+    },
+    {
+        header: 'Date',
+        accessor: 'date',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Start Time',
+        accessor: 'startTime',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'End Time',
+        accessor: 'endTime',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];

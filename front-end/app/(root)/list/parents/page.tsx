@@ -1,5 +1,5 @@
 import Pagination from '@/components/Pagination'
-import ParentTable from '@/components/ParentTable';
+import ParentTable from '@/components/tables/ParentTable';
 import TableSearch from '@/components/TableSearch'
 import { role, parentsData } from '@/lib/data'
 import Image from 'next/image'

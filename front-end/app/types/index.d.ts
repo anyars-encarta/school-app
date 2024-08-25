@@ -79,6 +79,16 @@ declare type ResultsParams = {
     score: string;
 };
 
+declare type EventsParams = {
+    id: string;
+    title: string;
+    description: string;
+    class: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
