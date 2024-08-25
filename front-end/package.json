@@ -15,7 +15,8 @@
     "react-big-calendar": "^1.13.4",
     "react-calendar": "^5.0.0",
     "react-dom": "^18",
-    "recharts": "^2.12.7"
+    "recharts": "^2.12.7",
+    "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",
