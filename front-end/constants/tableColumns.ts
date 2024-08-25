@@ -90,3 +90,19 @@ export const parentColumns = [
         accessor: 'actions',
     },
 ];
+
+export const subjectColumns = [
+    {
+        header: 'Subject Name',
+        accessor: 'name'
+    },
+    {
+        header: 'Teachers',
+        accessor: 'teachers',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];
