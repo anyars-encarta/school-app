@@ -89,6 +89,14 @@ declare type EventsParams = {
     endTime: string;
 };
 
+declare type AnnouncementsParams = {
+    id: string;
+    title: string;
+    description: string;
+    class: string;
+    date: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;

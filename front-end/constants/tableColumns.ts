@@ -267,3 +267,28 @@ export const eventsColumns = [
         accessor: 'actions',
     },
 ];
+
+export const announcementsColumns = [
+    {
+        header: 'Title',
+        accessor: 'title'
+    },
+    {
+        header: 'Description',
+        accessor: 'description',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Class',
+        accessor: 'class',
+    },
+    {
+        header: 'Date',
+        accessor: 'date',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];
