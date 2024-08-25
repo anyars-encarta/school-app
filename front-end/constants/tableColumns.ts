@@ -141,7 +141,6 @@ export const lessonColumns = [
     {
         header: 'Class',
         accessor: 'class',
-        className: 'hidden md:table-cell'
     },
     {
         header: 'Teacher',
