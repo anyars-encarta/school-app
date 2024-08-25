@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import TeacherForm from "./TeacherForm";
 
 const FormModal = ({
     table,
@@ -40,10 +41,11 @@ const FormModal = ({
                     <button className='bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center'>Delete</button>
                 </form>
             ) : (
-                // create or update form
-                <form action="">
-                    Create or Update form
-                </form>
+                type === 'create' && table === 'teacher' ? (
+                    <TeacherForm type={type} data={data}/>
+                ): (
+                    ''
+                )
             )
         )
     };

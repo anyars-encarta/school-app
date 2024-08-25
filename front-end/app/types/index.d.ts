@@ -1,3 +1,5 @@
+import { FieldError } from "react-hook-form";
+
 declare type TeacherParams = {
     id: number;
     teacherId: string;
@@ -102,3 +104,13 @@ declare type TableColumnParams = {
     accessor: string;
     className?: string;
 };
+
+declare type CustomInputFieldParams = {
+    label: string;
+type?: string;
+register: any;
+name: string;
+defaultValue?: string;
+error?: FieldError;
+inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+}
