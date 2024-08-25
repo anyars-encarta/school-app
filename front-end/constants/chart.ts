@@ -1,18 +1,13 @@
 export const PieChartData = [
   {
-    name: 'Total',
-    count: 106,
-    fill: 'white',
-  },
-  {
     name: 'Boys',
-    count: 53,
-    fill: '#C3EBFA',
+    value: 92,
+    fill: '#C3EBFA'
   },
   {
     name: 'Girls',
-    count: 53,
-    fill: '#FAE27C',
+    value: 8,
+    fill: '#FAE27C'
   },
 ];
 
