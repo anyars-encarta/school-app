@@ -202,3 +202,38 @@ export const assignmentsColumns = [
         accessor: 'actions',
     },
 ];
+
+export const resultsColumns = [
+    {
+        header: 'Subject',
+        accessor: 'subject'
+    },
+    {
+        header: 'Student',
+        accessor: 'student',
+    },
+    {
+        header: 'Score',
+        accessor: 'score',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Teacher',
+        accessor: 'teacher',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Class',
+        accessor: 'class',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Date',
+        accessor: 'date',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];

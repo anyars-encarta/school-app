@@ -68,6 +68,17 @@ declare type AssignmentsParams = {
     dueDate: string;
 };
 
+declare type ResultsParams = {
+    id: string;
+    subject: string;
+    class: string;
+    teacher: string;
+    student: string;
+    date: string;
+    type: 'exam' | 'assignment';
+    score: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
