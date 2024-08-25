@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
-const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
+const SingleStudent = ({ params: { id } }: { params: { id: string } }) => {
     return (
         <div className='flex-1 p-4 flex flex-col gap-4 xl:flex-row'>
             {/* LEFT */}
@@ -71,8 +71,8 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
                             <Image src='/singleBranch.png' alt='' width={24} height={24} className='w-6 h-6' />
 
                             <div className=''>
-                                <h2 className='text-xl font-semibold'>2</h2>
-                                <span className='text-sm text-gray-400'>Branches</span>
+                                <h2 className='text-xl font-semibold'>6th</h2>
+                                <span className='text-sm text-gray-400'>Grade</span>
                             </div>
                         </div>
 
@@ -80,7 +80,7 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
                             <Image src='/singleLesson.png' alt='' width={24} height={24} className='w-6 h-6' />
 
                             <div className=''>
-                                <h2 className='text-xl font-semibold'>6</h2>
+                                <h2 className='text-xl font-semibold'>21</h2>
                                 <span className='text-sm text-gray-400'>Lessons</span>
                             </div>
                         </div>
@@ -89,8 +89,8 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
                             <Image src='/singleClass.png' alt='' width={24} height={24} className='w-6 h-6' />
 
                             <div className=''>
-                                <h2 className='text-xl font-semibold'>6</h2>
-                                <span className='text-sm text-gray-400'>Classes</span>
+                                <h2 className='text-xl font-semibold'>3A</h2>
+                                <span className='text-sm text-gray-400'>Class Name</span>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
 
                 {/* BOTTOM */}
                 <div className='mt-4 bg-white rounded-md p-4 h-[800px]'>
-                    <h2 className='text-lg font-semibold'>Teacher&apos;s Schedule</h2>
+                    <h2 className='text-lg font-semibold'>Student&apos;s Schedule</h2>
                     <BigCalendar />
                 </div>
             </div>
@@ -110,11 +110,11 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
                     <h2 className='text-xl font-semibold'>Shortcuts</h2>
 
                     <div className='mt-3 flex gap-4 flex-wrap text-xs text-gray-500'>
-                        <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Classes</Link>
-                        <Link href='/' className='p-3 rounded-md bg-encPurpleLight'>Teacher&apos;s Students</Link>
-                        <Link href='/' className='p-3 rounded-md bg-encYellowLight'>Teacher&apos;s Lessons</Link>
-                        <Link href='/' className='p-3 rounded-md bg-pink-50'>Teacher&apos;s Exams</Link>
-                        <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Assignments</Link>
+                        <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Student&apos;s Lessons</Link>
+                        <Link href='/' className='p-3 rounded-md bg-encPurpleLight'>Student&apos;s Teachers</Link>
+                        <Link href='/' className='p-3 rounded-md bg-pink-50'>Student&apos;s Exams</Link>
+                        <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Student&apos;s Assignments</Link>
+                        <Link href='/' className='p-3 rounded-md bg-encYellowLight'>Student&apos;s Results</Link>
                     </div>
                 </div>
 
@@ -127,4 +127,4 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
     )
 };
 
-export default SingleTeacher
+export default SingleStudent
