@@ -1,5 +1,5 @@
 import Pagination from '@/components/Pagination'
-import ResultsTable from '@/components/ResultsTable';
+import ResultsTable from '@/components/tables/ResultsTable';
 import TableSearch from '@/components/TableSearch'
 import { role, resultsData } from '@/lib/data'
 import Image from 'next/image'

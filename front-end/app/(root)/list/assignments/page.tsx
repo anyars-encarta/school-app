@@ -1,5 +1,5 @@
 import Pagination from '@/components/Pagination'
-import AssignmentsTable from '@/components/AssignmentsTable';
+import AssignmentsTable from '@/components/tables/AssignmentsTable';
 import TableSearch from '@/components/TableSearch'
 import { role, assignmentsData } from '@/lib/data'
 import Image from 'next/image'

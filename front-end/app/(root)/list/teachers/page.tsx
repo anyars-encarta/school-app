@@ -1,5 +1,5 @@
 import Pagination from '@/components/Pagination'
-import TeacherTable from '@/components/TeacherTable';
+import TeacherTable from '@/components/tables/TeacherTable';
 import TableSearch from '@/components/TableSearch'
 import { teacherColumns } from '@/constants/tableColumns'
 import { role, teachersData } from '@/lib/data'
