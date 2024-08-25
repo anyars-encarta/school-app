@@ -106,3 +106,28 @@ export const subjectColumns = [
         accessor: 'actions',
     },
 ];
+
+export const classColumns = [
+    {
+        header: 'Class Name',
+        accessor: 'name'
+    },
+    {
+        header: 'Capacity',
+        accessor: 'capacity',
+    },
+    {
+        header: 'Grade',
+        accessor: 'grade',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Supervisor',
+        accessor: 'supervisor',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];

@@ -37,6 +37,14 @@ declare type SubjectParams = {
     teachers: string[];
 }
 
+declare type ClassesParams = {
+    id: string;
+    name: string;
+    capacity: string;
+    grade: string;
+    supervisor: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
