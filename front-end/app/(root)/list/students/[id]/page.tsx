@@ -1,7 +1,7 @@
 'use client';
 
 import Announcement from '@/components/Announcement';
-import BigCalendar from '@/components/BigCalendar';
+import BigCalendar from '@/components/calendar/BigCalendar';
 import TeacherChart from '@/components/charts/TeacherChart';
 import Image from 'next/image';
 import Link from 'next/link';

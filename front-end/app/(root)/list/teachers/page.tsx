@@ -1,4 +1,4 @@
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/tables/Pagination'
 import TeacherTable from '@/components/tables/TeacherTable';
 import TableSearch from '@/components/TableSearch'
 import { teacherColumns } from '@/constants/tableColumns'

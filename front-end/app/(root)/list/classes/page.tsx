@@ -1,4 +1,4 @@
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/tables/Pagination'
 import ClassTable from '@/components/tables/ClassTable';
 import TableSearch from '@/components/TableSearch'
 import { role, classesData } from '@/lib/data'

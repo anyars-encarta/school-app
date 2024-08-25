@@ -1,4 +1,4 @@
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/tables/Pagination'
 import EventsTable from '@/components/tables/EventsTable';
 import TableSearch from '@/components/TableSearch'
 import { role, eventsData } from '@/lib/data'
