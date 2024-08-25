@@ -60,6 +60,14 @@ declare type ExamsParams = {
     date: string;
 };
 
+declare type AssignmentsParams = {
+    id: string;
+    subject: string;
+    class: string;
+    teacher: string;
+    dueDate: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
