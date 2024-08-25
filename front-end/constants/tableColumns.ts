@@ -63,4 +63,30 @@ export const studentColumns = [
         header: 'Actions',
         accessor: 'actions',
     },
-]
+];
+
+export const parentColumns = [
+    {
+        header: 'Info',
+        accessor: 'info'
+    },
+    {
+        header: 'Student Names',
+        accessor: 'students',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Phone',
+        accessor: 'phone',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Address',
+        accessor: 'address',
+        className: 'hidden md:table-cell'
+    },
+    {
+        header: 'Actions',
+        accessor: 'actions',
+    },
+];
