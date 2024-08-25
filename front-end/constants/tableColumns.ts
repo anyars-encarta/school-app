@@ -115,7 +115,6 @@ export const classColumns = [
     {
         header: 'Capacity',
         accessor: 'capacity',
-        className: 'hidden md:table-cell'
     },
     {
         header: 'Grade',
