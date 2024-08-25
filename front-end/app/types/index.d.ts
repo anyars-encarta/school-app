@@ -22,6 +22,15 @@ declare type StudentParams = {
     address: string;
 };
 
+declare type ParentParams = {
+    id: string;
+    name: string;
+    students: string[];
+    email?: string;
+    phone: string;
+    address: string;
+};
+
 declare type TableColumnParams = {
     header: string;
     accessor: string;
