@@ -1,10 +1,12 @@
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/tables/Pagination'
 import ClassTable from '@/components/tables/ClassTable';
 import TableSearch from '@/components/TableSearch'
 import { role, classesData } from '@/lib/data'
 import Image from 'next/image'
 import Link from 'next/link'
 import { classColumns } from '@/constants/tableColumns';
+import FormModal from '@/components/forms/FormModal';
+import { ClassesParams } from '@/app/types';
 
 const ClassesList = () => {
     const renderRow = (item: ClassesParams) => (
@@ -16,16 +18,29 @@ const ClassesList = () => {
 
             <td>
                 <div className='flex items-center gap-2'>
-                    <Link href={`/list/teachers/${item.id}`}>
-                        <button className='flex items-center justify-center rounded-full bg-encSky'>
-                            <Image src='/edit.png' alt='' width={16} height={16} />
-                        </button>
-                    </Link>
-
                     {role === 'admin' && (
-                        <button className='flex items-center justify-center rounded-full bg-encPurple'>
-                            <Image src='/delete.png' alt='' width={16} height={16} />
-                        </button>
+                        <>
+                            {/* <Link href={`/list/teachers/${item.id}`}> */}
+                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                                    <Image src='/update.png' alt='' width={16} height={16} />
+                                </button> */}
+                            <FormModal table='class' type='update' data={
+                                {
+                                    id: 1,
+                                    name: "1A",
+                                    capacity: 20,
+                                    grade: 1,
+                                    supervisor: "Joseph Padilla",
+                                }
+                            } />
+                            {/* </Link> */}
+
+
+                            {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
+                                <Image src='/delete.png' alt='' width={16} height={16} />
+                            </button> */}
+                            <FormModal table='class' type='delete' id={item.id} />
+                        </>
                     )}
                 </div>
             </td>
@@ -51,9 +66,10 @@ const ClassesList = () => {
                         </button>
 
                         {role === 'admin' && (
-                            <button className='w-8 h-8 rounded-full bg-encYellow flex items-center justify-center'>
-                                <Image src='/plus.png' alt='filter' width={14} height={14} />
-                            </button>
+                            // <button className='w-8 h-8 rounded-full bg-encYellow flex items-center justify-center'>
+                            //     <Image src='/create.png' alt='filter' width={14} height={14} />
+                            // </button>
+                            <FormModal table='class' type='create' />
                         )}
                     </div>
                 </div>

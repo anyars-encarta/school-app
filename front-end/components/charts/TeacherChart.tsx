@@ -15,7 +15,7 @@ const TeacherChart = () => {
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
-                        dataKey="value"
+                        dataKey="count"
                         startAngle={180}
                         endAngle={0}
                         data={PieChartData}

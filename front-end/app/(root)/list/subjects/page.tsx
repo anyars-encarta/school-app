@@ -1,10 +1,12 @@
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/tables/Pagination'
 import SubjectTable from '@/components/tables/SubjectTable';
 import TableSearch from '@/components/TableSearch'
 import { role, subjectsData } from '@/lib/data'
 import Image from 'next/image'
 import Link from 'next/link'
 import { subjectColumns } from '@/constants/tableColumns';
+import FormModal from '@/components/forms/FormModal';
+import { SubjectParams } from '@/app/types';
 
 const SubjectList = () => {
     const renderRow = (item: SubjectParams) => (
@@ -14,16 +16,27 @@ const SubjectList = () => {
 
             <td>
                 <div className='flex items-center gap-2'>
-                    <Link href={`/list/teachers/${item.id}`}>
-                        <button className='flex items-center justify-center rounded-full bg-encSky'>
-                            <Image src='/edit.png' alt='' width={16} height={16} />
-                        </button>
-                    </Link>
-
                     {role === 'admin' && (
-                        <button className='flex items-center justify-center rounded-full bg-encPurple'>
-                            <Image src='/delete.png' alt='' width={16} height={16} />
-                        </button>
+                        <>
+                            {/* <Link href={`/list/teachers/${item.id}`}> */}
+                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                                    <Image src='/update.png' alt='' width={16} height={16} />
+                                </button> */}
+                            <FormModal table='subject' type='update' data={
+                                {
+                                    id: 1,
+                                    name: "Math",
+                                    teachers: ["Alice Phelps", "Russell Davidson"],
+                                }
+                            } />
+                            {/* </Link> */}
+
+
+                            {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
+                                <Image src='/delete.png' alt='' width={16} height={16} />
+                            </button> */}
+                            <FormModal table='subject' type='delete' id={item.id} />
+                        </>
                     )}
                 </div>
             </td>
@@ -49,9 +62,10 @@ const SubjectList = () => {
                         </button>
 
                         {role === 'admin' && (
-                            <button className='w-8 h-8 rounded-full bg-encYellow flex items-center justify-center'>
-                                <Image src='/plus.png' alt='filter' width={14} height={14} />
-                            </button>
+                            // <button className='w-8 h-8 rounded-full bg-encYellow flex items-center justify-center'>
+                            //     <Image src='/create.png' alt='filter' width={14} height={14} />
+                            // </button>
+                            <FormModal table='subject' type='create' />
                         )}
                     </div>
                 </div>

@@ -1,8 +1,9 @@
 'use client';
 
 import Announcement from '@/components/Announcement';
-import BigCalendar from '@/components/BigCalendar';
+import BigCalendar from '@/components/calendar/BigCalendar';
 import TeacherChart from '@/components/charts/TeacherChart';
+import FormModal from '@/components/forms/FormModal';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -28,7 +29,25 @@ const SingleStudent = ({ params: { id } }: { params: { id: string } }) => {
 
                         {/* INFO */}
                         <div className='w-2/3 flex flex-col justify-between gap-4'>
-                            <h1 className='text-xl font-semibold'>Jane Doe</h1>
+                            <div className='flex items-center gap-4'>
+                                <h1 className='text-xl font-semibold'>Jane Doe</h1>
+                                <FormModal table='student' type='update' data={
+                                    {
+                                        id: 1,
+                                        studentId: "1234567890",
+                                        username: 'john-student',
+                                        firstName: "John-student",
+                                        lastName: 'Doe-student',
+                                        email: "john-student@doe.com",
+                                        photo:
+                                            "https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                                        phone: "1234567890",
+                                        subjects: ["Math", "Geometry"],
+                                        classe: "1B",
+                                        address: "123 Main St, Anytown, USA",
+                                    }
+                                } />
+                            </div>
                             <p className='text-sm text-gray-500'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam rem temporibus obcaecati eaque.</p>
 
                             <div className='flex items-center justify-between gap-2 flex-wrap text-xs font-medium'>

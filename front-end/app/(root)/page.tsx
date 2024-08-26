@@ -1,7 +1,8 @@
+import AdminPage from "./admin/page";
 
 const HomePage = () => {
   return (
-    <div className=''>HomePage</div>
+    <AdminPage />
   );
 }
 

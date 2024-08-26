@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Encarta School Management Dashboard",
   description: "Next.js School Management System",
+  icons: {
+    icon: '/logo.png'
+  }
 };
 
 export default function RootLayout({

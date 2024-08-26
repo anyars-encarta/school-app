@@ -244,6 +244,11 @@ export const eventsColumns = [
         accessor: 'title'
     },
     {
+        header: 'Description',
+        accessor: 'description',
+        className: 'hidden md:table-cell'
+    },
+    {
         header: 'Class',
         accessor: 'class',
     },

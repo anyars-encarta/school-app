@@ -1,7 +1,7 @@
 'use client';
 
 import Announcement from '@/components/Announcement';
-import BigCalendar from '@/components/BigCalendar';
+import BigCalendar from '@/components/calendar/BigCalendar';
 // import EventCalendar from '@/components/EventCalendar';
 
 const TeacherPage = () => {
