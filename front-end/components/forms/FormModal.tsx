@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import TeacherForm from "./TeacherForm";
+import StudentForm from "./StudentForm";
 
 const FormModal = ({
     table,
@@ -44,7 +45,19 @@ const FormModal = ({
                 type === 'create' && table === 'teacher' ? (
                     <TeacherForm type={type} data={data}/>
                 ): (
-                    ''
+                    type === 'update' && table === 'teacher' ? (
+                        <TeacherForm type={type} data={data} />
+                    ): (
+                        type === 'create' && table === 'student' ? (
+                            <StudentForm type={type} data={data} />
+                        ): (
+                            type === 'update' && table === 'student' ? (
+                                <StudentForm type={type} data={data} />
+                            ): (
+                                ''
+                            )
+                        )
+                    )
                 )
             )
         )
@@ -53,7 +66,7 @@ const FormModal = ({
     return (
         <>
             <button
-                className={`${size} rounded-full flex items-center justify-center ${bgColor}`}
+                className={`${size}w-7 h-7 rounded-full flex items-center justify-center bg-encPurple ${bgColor}`}
                 onClick={() => setOpen(true)}
             >
                 <Image src={`/${type}.png`} alt='' width={16} height={16} />

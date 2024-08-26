@@ -26,7 +26,7 @@ const schema = z.object({
 
 type Inputs = z.infer<typeof schema>;
 
-const TeacherForm = ({ type, data }: { type: 'create' | 'update', data?: any }) => {
+const StudentForm = ({ type, data }: { type: 'create' | 'update', data?: any }) => {
     const {
         register,
         handleSubmit,
@@ -35,14 +35,14 @@ const TeacherForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
         resolver: zodResolver(schema),
     });
 
-    const createTeacher = handleSubmit(data => {
+    const createStudent = handleSubmit(data => {
         console.log(data)
     });
 
     console.log(data)
     return (
-        <form onSubmit={createTeacher} className='flex  flex-col gap-8'>
-            <h1 className='text-xl font-semibold'>{type === 'create' ? 'Create a new Teacher' : `Update details for ${data?.firstName} ${data?.lastName}`}</h1>
+        <form onSubmit={createStudent} className='flex  flex-col gap-8'>
+            <h1 className='text-xl font-semibold'>{type === 'create' ? 'Create a new Student' : `Update details for ${data?.firstName} ${data?.lastName}`}</h1>
 
             <span className='text-xs text-gray-400 font-medium'>Authentication Information</span>
 
@@ -175,4 +175,4 @@ const TeacherForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
     )
 }
 
-export default TeacherForm
+export default StudentForm

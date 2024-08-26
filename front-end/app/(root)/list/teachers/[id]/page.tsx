@@ -3,11 +3,12 @@
 import Announcement from '@/components/Announcement';
 import BigCalendar from '@/components/calendar/BigCalendar';
 import TeacherChart from '@/components/charts/TeacherChart';
+import FormModal from '@/components/forms/FormModal';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
-const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
+const SingleTeacher = ({ params: { id } }: { params: { id: number } }) => {
     return (
         <div className='flex-1 p-4 flex flex-col gap-4 xl:flex-row'>
             {/* LEFT */}
@@ -28,7 +29,25 @@ const SingleTeacher = ({ params: { id } }: { params: { id: string } }) => {
 
                         {/* INFO */}
                         <div className='w-2/3 flex flex-col justify-between gap-4'>
-                            <h1 className='text-xl font-semibold'>Jane Doe</h1>
+                            <div className='flex items-center gap-4'>
+                                <h1 className='text-xl font-semibold'>Jane Doe</h1>
+                                <FormModal table='teacher' type='update' data={
+                                    {
+                                        id: 1,
+                                        teacherId: "1234567890",
+                                        username: 'john',
+                                        firstName: "John",
+                                        lastName: 'Doe',
+                                        email: "john@doe.com",
+                                        photo:
+                                            "https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                                        phone: "1234567890",
+                                        subjects: ["Math", "Geometry"],
+                                        classes: ["1B", "2A", "3C"],
+                                        address: "123 Main St, Anytown, USA",
+                                    }
+                                } />
+                            </div>
                             <p className='text-sm text-gray-500'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam rem temporibus obcaecati eaque.</p>
 
                             <div className='flex items-center justify-between gap-2 flex-wrap text-xs font-medium'>
