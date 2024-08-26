@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { parentColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
+import { ParentParams } from '@/app/types';
 
 const ParentList = () => {
     const renderRow = (item: ParentParams) => (
@@ -26,10 +27,21 @@ const ParentList = () => {
                     {role === 'admin' && (
                         <>
                             {/* <Link href={`/list/teachers/${item.id}`}> */}
-                                {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/update.png' alt='' width={16} height={16} />
                                 </button> */}
-                                <FormModal table='parent' type='update' data={item} />
+                            <FormModal table='parent' type='update' data={
+                                {
+                                    id: 1,
+                                    username: "John-parent",
+                                    firstName: 'John-Parent',
+                                    lastName: 'Doe-parent',
+                                    students: ["Sarah Brewer"],
+                                    email: "john@doe.com",
+                                    phone: "1234567890",
+                                    address: "123 Main St, Anytown, USA",
+                                }
+                            } />
                             {/* </Link> */}
 
                             {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { lessonColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
+import { LessonsParams } from '@/app/types';
 
 const LessonsList = () => {
     const renderRow = (item: LessonsParams) => (
@@ -22,7 +23,14 @@ const LessonsList = () => {
                                 {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/update.png' alt='' width={16} height={16} />
                                 </button> */}
-                                <FormModal table='lesson' type='update' data={item} />
+                                <FormModal table='lesson' type='update' data={
+                                    {
+                                        id: 1,
+                                        subject: "Math",
+                                        class: "1A",
+                                        teacher: "Tommy Wise",
+                                      }
+                                } />
                             {/* </Link> */}
 
 

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { assignmentsColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
+import { AssignmentsParams } from '@/app/types';
 
 const AssignmentsList = () => {
     const renderRow = (item: AssignmentsParams) => (
@@ -20,10 +21,18 @@ const AssignmentsList = () => {
                     {role === 'admin' && (
                         <>
                             {/* <Link href={`/list/teachers/${item.id}`}> */}
-                                {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/update.png' alt='' width={16} height={16} />
                                 </button> */}
-                                <FormModal table='assignment' type='update' data={item} />
+                            <FormModal table='assignment' type='update' data={
+                                {
+                                    id: 1,
+                                    subject: "Math",
+                                    class: "1A",
+                                    teacher: "Anthony Boone",
+                                    dueDate: "2025-01-01",
+                                }
+                            } />
                             {/* </Link> */}
 
 

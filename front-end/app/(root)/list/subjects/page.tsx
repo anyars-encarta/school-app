@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { subjectColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
+import { SubjectParams } from '@/app/types';
 
 const SubjectList = () => {
     const renderRow = (item: SubjectParams) => (
@@ -18,10 +19,16 @@ const SubjectList = () => {
                     {role === 'admin' && (
                         <>
                             {/* <Link href={`/list/teachers/${item.id}`}> */}
-                                {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/update.png' alt='' width={16} height={16} />
                                 </button> */}
-                                <FormModal table='subject' type='update' data={item} />
+                            <FormModal table='subject' type='update' data={
+                                {
+                                    id: 1,
+                                    name: "Math",
+                                    teachers: ["Alice Phelps", "Russell Davidson"],
+                                }
+                            } />
                             {/* </Link> */}
 
 

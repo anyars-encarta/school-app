@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { classColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
+import { ClassesParams } from '@/app/types';
 
 const ClassesList = () => {
     const renderRow = (item: ClassesParams) => (
@@ -20,10 +21,18 @@ const ClassesList = () => {
                     {role === 'admin' && (
                         <>
                             {/* <Link href={`/list/teachers/${item.id}`}> */}
-                                {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                     <Image src='/update.png' alt='' width={16} height={16} />
                                 </button> */}
-                                <FormModal table='class' type='update' data={item} />
+                            <FormModal table='class' type='update' data={
+                                {
+                                    id: 1,
+                                    name: "1A",
+                                    capacity: 20,
+                                    grade: 1,
+                                    supervisor: "Joseph Padilla",
+                                }
+                            } />
                             {/* </Link> */}
 
 
