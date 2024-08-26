@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Events from './Event';
+import Events from '../Event';
 
 type ValuePiece = Date | null;
 
