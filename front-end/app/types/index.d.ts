@@ -107,10 +107,10 @@ declare type TableColumnParams = {
 
 declare type CustomInputFieldParams = {
     label: string;
-type?: string;
-register: any;
-name: string;
-defaultValue?: string;
-error?: FieldError;
-inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+    type?: string;
+    register: any;
+    name: string;
+    defaultValue?: string;
+    error?: FieldError;
+    inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
