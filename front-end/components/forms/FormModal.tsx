@@ -3,53 +3,54 @@
 import Image from "next/image";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import SpinnerLoader from "./SpinnerLoader";
 // import TeacherForm from "./TeacherForm";
 // import StudentForm from "./StudentForm";
 // import ParentForm from "./ParentForm";
 
 // LAZY LOADING IMPORTS
 const TeacherForm = dynamic(() => import("./TeacherForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const StudentForm = dynamic(() => import("./StudentForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const ParentForm = dynamic(() => import("./ParentForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const SubjectForm = dynamic(() => import("./SubjectForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const ClassForm = dynamic(() => import("./ClassForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const LessonForm = dynamic(() => import("./LessonForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const ExamForm = dynamic(() => import("./ExamForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const AssignmentForm = dynamic(() => import("./AssignmentForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const ResultForm = dynamic(() => import("./ResultForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const EventForm = dynamic(() => import("./EventForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const AnnouncementForm = dynamic(() => import("./AnnouncementForm"), {
-    loading: () => <h1>Loading...</h1>
+    loading: () => <SpinnerLoader />
 });
 
 const forms: {
