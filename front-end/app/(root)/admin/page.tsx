@@ -2,8 +2,8 @@ import UserCard from '@/components/UserCard';
 import CountChart from '@/components/charts/CountChart'
 import AttendanceChart from '@/components/charts/AttendanceChart';
 import FinanceChart from '@/components/charts/FinanceChart';
-import EventCalendar from '@/components/EventCalendar';
 import Announcement from '@/components/Announcement';
+import EventCalendar from '@/components/calendar/EventCalendar';
 
 const AdminPage = () => {
   return (
