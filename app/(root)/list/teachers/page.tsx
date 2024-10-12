@@ -30,8 +30,8 @@ const renderRow = (item: teacherList) => (
         </td>
 
         <td className='hidden md:table-cell'>{item.id}</td>
-        <td className='hidden md:table-cell'>{item.subjects?.join(",")}</td>
-        <td className='hidden md:table-cell'>{item.classes?.join(",")}</td>
+        <td className='hidden md:table-cell'>{item.subjects.map(subject => subject.name)?.join(",")}</td>
+        <td className='hidden md:table-cell'>{item.classes.map(classItem => classItem.name)?.join(",")}</td>
         <td className='hidden md:table-cell'>{item.phone}</td>
         <td className='hidden md:table-cell'>{item.address}</td>
 
@@ -60,7 +60,7 @@ const renderRow = (item: teacherList) => (
 
 const TeacherList = async () => {
     const teachers = await prisma.teacher.findMany({include: {subjects: true, classes: true}});
-console.log(teachers)
+    
     return (
         <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
             {/* TOP */}
