@@ -130,7 +130,7 @@ const SingleTeacher = ({ params: { id } }: { params: { id: number } }) => {
 
                     <div className='mt-3 flex gap-4 flex-wrap text-xs text-gray-500'>
                         <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Classes</Link>
-                        <Link href='/' className='p-3 rounded-md bg-encPurpleLight'>Teacher&apos;s Students</Link>
+                        <Link href={`/list/students?teacherId=${id}`} className='p-3 rounded-md bg-encPurpleLight'>Teacher&apos;s Students</Link>
                         <Link href='/' className='p-3 rounded-md bg-encYellowLight'>Teacher&apos;s Lessons</Link>
                         <Link href='/' className='p-3 rounded-md bg-pink-50'>Teacher&apos;s Exams</Link>
                         <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Assignments</Link>
