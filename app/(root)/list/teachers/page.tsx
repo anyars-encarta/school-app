@@ -7,7 +7,7 @@ import { teacherColumns } from '@/constants/tableColumns'
 import { role, teachersData } from '@/lib/data'
 import { ITEM_PER_PAGE } from '@/lib/settings';
 import prisma from '@/prisma';
-import { Class, Subject, Teacher } from '@prisma/client';
+import { Class, Prisma, Subject, Teacher } from '@prisma/client';
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -68,8 +68,27 @@ const TeacherList = async ({
 
     const p = page ? parseInt(page) : 1;
 
+    // URL PARAMS CONDITIONS
+    const query: Prisma.TeacherWhereInput = {};
+
+    if (queryParams) {
+        for (const [key, value] of Object.entries(queryParams)) {
+            if (value !== undefined) {
+                switch (key) {
+                    case "classId":
+                        query.lessons = {
+                            some: {
+                                classId: parseInt(value),
+                            }
+                        }
+                }
+            }
+        }
+    }
+
     const [teachers, count] = await prisma.$transaction([
         prisma.teacher.findMany({
+            where: query,
             include: {
                 subjects: true,
                 classes: true
@@ -78,7 +97,7 @@ const TeacherList = async ({
             skip: ITEM_PER_PAGE * (p - 1)
         }),
 
-        prisma.teacher.count()
+        prisma.teacher.count({where: query})
     ])
 
     return (
