@@ -89,6 +89,9 @@ const StudentList = async ({
                             contains: value,
                             mode: "insensitive",
                         }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -104,7 +107,7 @@ const StudentList = async ({
             skip: ITEM_PER_PAGE * (p - 1)
         }),
 
-        prisma.student.count({where: query})
+        prisma.student.count({ where: query })
     ])
 
     return (
@@ -139,7 +142,7 @@ const StudentList = async ({
             <StudentTable studentColumns={studentColumns} renderRow={renderRow} data={students} />
 
             {/* PAGINATION */}
-            <Pagination page={p} count={count}/>
+            <Pagination page={p} count={count} />
         </div>
     )
 }

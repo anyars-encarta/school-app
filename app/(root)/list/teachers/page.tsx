@@ -88,6 +88,9 @@ const TeacherList = async ({
                             contains: value,
                             mode: "insensitive",
                         }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -104,7 +107,7 @@ const TeacherList = async ({
             skip: ITEM_PER_PAGE * (p - 1)
         }),
 
-        prisma.teacher.count({where: query})
+        prisma.teacher.count({ where: query })
     ])
 
     return (
