@@ -132,8 +132,8 @@ const SingleTeacher = ({ params: { id } }: { params: { id: number } }) => {
                         <Link href={`/list/classes?supervisorId=${id}`} className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Classes</Link>
                         <Link href={`/list/students?teacherId=${id}`} className='p-3 rounded-md bg-encPurpleLight'>Teacher&apos;s Students</Link>
                         <Link href={`/list/lessons?teacherId=${id}`} className='p-3 rounded-md bg-encYellowLight'>Teacher&apos;s Lessons</Link>
-                        <Link href='/' className='p-3 rounded-md bg-pink-50'>Teacher&apos;s Exams</Link>
-                        <Link href='/' className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Assignments</Link>
+                        <Link href={`/list/exams?teacherId=${id}`} className='p-3 rounded-md bg-pink-50'>Teacher&apos;s Exams</Link>
+                        <Link href={`/list/assignments?teacherId=${id}`} className='p-3 rounded-md bg-encSkyLight'>Teacher&apos;s Assignments</Link>
                     </div>
                 </div>
 
