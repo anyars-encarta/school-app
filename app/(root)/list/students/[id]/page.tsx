@@ -133,7 +133,7 @@ const SingleStudent = ({ params: { id } }: { params: { id: string } }) => {
                         <Link href={`/list/teachers?classId=${2}`} className='p-3 rounded-md bg-encPurpleLight'>Student&apos;s Teachers</Link>
                         <Link href={`/list/exams?classId=${2}`} className='p-3 rounded-md bg-pink-50'>Student&apos;s Exams</Link>
                         <Link href={`/list/assignments?classId=${2}`} className='p-3 rounded-md bg-encSkyLight'>Student&apos;s Assignments</Link>
-                        <Link href={`/list/results?classId=${2}`} className='p-3 rounded-md bg-encYellowLight'>Student&apos;s Results</Link>
+                        <Link href={`/list/results?studentId=${"student2"}`} className='p-3 rounded-md bg-encYellowLight'>Student&apos;s Results</Link>
                     </div>
                 </div>
 
