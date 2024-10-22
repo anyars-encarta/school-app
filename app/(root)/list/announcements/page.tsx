@@ -7,45 +7,88 @@ import Link from 'next/link'
 import { announcementsColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
 import { AnnouncementsParams } from '@/app/types';
+import { Announcement, Class, Prisma } from '@prisma/client';
+import prisma from '@/prisma';
+import { ITEM_PER_PAGE } from '@/lib/settings';
 
-const AnnouncementsList = () => {
-    const renderRow = (item: AnnouncementsParams) => (
-        <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
-            <td className='flex items-center gap-4 p-4'>{item.title}</td>
-            <td className='hidden md:table-cell'>{item.description}</td>
-            <td>{item.class}</td>
-            <td className='hidden md:table-cell'>{item.date}</td>
+type announcementList = Announcement & { class: Class};
 
-            <td>
-                <div className='flex items-center gap-2'>
-                    {role === 'admin' && (
-                        <>
-                            {/* <Link href={`/list/teachers/${item.id}`}> */}
-                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
-                                    <Image src='/update.png' alt='' width={16} height={16} />
-                                </button> */}
-                            <FormModal table='announcement' type='update' data={
-                                {
-                                    id: 1,
-                                    title: "About 4A Math Test",
-                                    description: "There will be a test for the 4A class. All should endevour to write the test. Failure to write the test will lead to repetition.",
-                                    class: "4A",
-                                    date: "2025-01-01",
-                                }
-                            } />
-                            {/* </Link> */}
+const renderRow = (item: announcementList) => (
+    <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
+        <td className='flex items-center gap-4 p-4'>{item.title}</td>
+        <td className='hidden md:table-cell'>{item.description}</td>
+        <td>{item.class.name}</td>
+        <td className='hidden md:table-cell'>{new Intl.DateTimeFormat("en-US").format(item.date)}</td>
 
-
-                            {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
-                                <Image src='/delete.png' alt='' width={16} height={16} />
+        <td>
+            <div className='flex items-center gap-2'>
+                {role === 'admin' && (
+                    <>
+                        {/* <Link href={`/list/teachers/${item.id}`}> */}
+                        {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                                <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                            <FormModal table='announcement' type='delete' id={item.id} />
-                        </>
-                    )}
-                </div>
-            </td>
-        </tr>
-    )
+                        <FormModal table='announcement' type='update' data={
+                            {
+                                id: 1,
+                                title: "About 4A Math Test",
+                                description: "There will be a test for the 4A class. All should endevour to write the test. Failure to write the test will lead to repetition.",
+                                class: "4A",
+                                date: "2025-01-01",
+                            }
+                        } />
+                        {/* </Link> */}
+
+
+                        {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
+                            <Image src='/delete.png' alt='' width={16} height={16} />
+                        </button> */}
+                        <FormModal table='announcement' type='delete' id={item.id} />
+                    </>
+                )}
+            </div>
+        </td>
+    </tr>
+);
+
+const AnnouncementsList = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | undefined }
+}) => {
+    const { page, ...queryParams } = searchParams;
+
+    const p = page ? parseInt(page) : 1;
+
+    // URL PARAMS CONDITIONS
+    const query: Prisma.AnnouncementWhereInput = {};
+
+    if (queryParams) {
+        for (const [key, value] of Object.entries(queryParams)) {
+            if (value !== undefined) {
+                switch (key) {
+                    case "search":
+                        query.title = { contains: value, mode: "insensitive" }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    const [announcements, count] = await prisma.$transaction([
+        prisma.announcement.findMany({
+            where: query,
+            include: {
+                class: true,
+            },
+            take: ITEM_PER_PAGE,
+            skip: ITEM_PER_PAGE * (p - 1)
+        }),
+
+        prisma.announcement.count({ where: query })
+    ]);
 
     return (
         <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -76,10 +119,10 @@ const AnnouncementsList = () => {
             </div>
 
             {/* LIST */}
-            <AnnouncementsTable announcementsColumns={announcementsColumns} renderRow={renderRow} data={announcementsData} />
+            <AnnouncementsTable announcementsColumns={announcementsColumns} renderRow={renderRow} data={announcements} />
 
             {/* PAGINATION */}
-            <Pagination />
+            <Pagination page={p} count={count} />
         </div>
     )
 }

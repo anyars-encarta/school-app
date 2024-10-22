@@ -7,49 +7,92 @@ import Link from 'next/link'
 import { eventsColumns } from '@/constants/tableColumns';
 import FormModal from '@/components/forms/FormModal';
 import { EventsParams } from '@/app/types';
+import { Class, Event, Prisma } from '@prisma/client';
+import prisma from '@/prisma';
+import { ITEM_PER_PAGE } from '@/lib/settings';
 
-const EventsList = () => {
-    const renderRow = (item: EventsParams) => (
-        <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
-            <td className='flex items-center gap-4 p-4'>{item.title}</td>
-            <td className='hidden md:table-cell'>{item.description}</td>
-            <td>{item.class}</td>
-            <td className='hidden md:table-cell'>{item.date}</td>
-            <td className='hidden md:table-cell'>{item.startTime}</td>
-            <td className='hidden md:table-cell'>{item.endTime}</td>
+type eventsList = Event & { class: Class };
 
-            <td>
-                <div className='flex items-center gap-2'>
-                    {role === 'admin' && (
-                        <>
-                            {/* <Link href={`/list/teachers/${item.id}`}> */}
-                            {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
-                                    <Image src='/update.png' alt='' width={16} height={16} />
-                                </button> */}
-                            <FormModal table='event' type='update' data={
-                                {
-                                    id: 1,
-                                    title: "Lake Trip",
-                                    description: "A memorable Lake Trip to entertain both students and teachers. It will be full of fun, excitement and lessons to learn from the trip.",
-                                    class: "1A",
-                                    date: "2025-01-01",
-                                    startTime: "10:00 AM",
-                                    endTime: "11:00 AM",
-                                }
-                            } />
-                            {/* </Link> */}
+const renderRow = (item: eventsList) => (
+    <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
+        <td className='flex items-center gap-4 p-4'>{item.title}</td>
+        <td className='hidden md:table-cell'>{item.description}</td>
+        <td>{item.class.name}</td>
+        <td className='hidden md:table-cell'>{new Intl.DateTimeFormat("en-US").format(item.startTime)}</td>
+        <td className='hidden md:table-cell'>{item.startTime.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+        <td className='hidden md:table-cell'>{item.endTime.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
 
-
-                            {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
-                                <Image src='/delete.png' alt='' width={16} height={16} />
+        <td>
+            <div className='flex items-center gap-2'>
+                {role === 'admin' && (
+                    <>
+                        {/* <Link href={`/list/teachers/${item.id}`}> */}
+                        {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
+                                <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                            <FormModal table='event' type='delete' id={item.id} />
-                        </>
-                    )}
-                </div>
-            </td>
-        </tr>
-    )
+                        <FormModal table='event' type='update' data={
+                            {
+                                id: 1,
+                                title: "Lake Trip",
+                                description: "A memorable Lake Trip to entertain both students and teachers. It will be full of fun, excitement and lessons to learn from the trip.",
+                                class: "1A",
+                                date: "2025-01-01",
+                                startTime: "10:00 AM",
+                                endTime: "11:00 AM",
+                            }
+                        } />
+                        {/* </Link> */}
+
+
+                        {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
+                            <Image src='/delete.png' alt='' width={16} height={16} />
+                        </button> */}
+                        <FormModal table='event' type='delete' id={item.id} />
+                    </>
+                )}
+            </div>
+        </td>
+    </tr>
+);
+
+const EventsList = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | undefined }
+}) => {
+    const { page, ...queryParams } = searchParams;
+
+    const p = page ? parseInt(page) : 1;
+
+    // URL PARAMS CONDITIONS
+    const query: Prisma.EventWhereInput = {};
+
+    if (queryParams) {
+        for (const [key, value] of Object.entries(queryParams)) {
+            if (value !== undefined) {
+                switch (key) {
+                    case "search":
+                        query.title = { contains: value, mode: "insensitive" }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    const [events, count] = await prisma.$transaction([
+        prisma.event.findMany({
+            where: query,
+            include: {
+                class: true,
+            },
+            take: ITEM_PER_PAGE,
+            skip: ITEM_PER_PAGE * (p - 1)
+        }),
+
+        prisma.event.count({ where: query })
+    ]);
 
     return (
         <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -80,10 +123,10 @@ const EventsList = () => {
             </div>
 
             {/* LIST */}
-            <EventsTable eventsColumns={eventsColumns} renderRow={renderRow} data={eventsData} />
+            <EventsTable eventsColumns={eventsColumns} renderRow={renderRow} data={events} />
 
             {/* PAGINATION */}
-            <Pagination />
+            <Pagination page={p} count={count} />
         </div>
     )
 }

@@ -140,7 +140,7 @@ model Result {
   examId       Int?
   exam         Exam?       @relation(fields: [examId], references: [id])
   assignmentId Int?
-  assignments  Assignment? @relation(fields: [assignmentId], references: [id])
+  assignment  Assignment? @relation(fields: [assignmentId], references: [id])
   studentId    String
   student      Student     @relation(fields: [studentId], references: [id])
 }

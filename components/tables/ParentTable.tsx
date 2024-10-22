@@ -1,3 +1,4 @@
+import { TableColumnParams } from "@/app/types";
 
 const ParentTable = (
     {

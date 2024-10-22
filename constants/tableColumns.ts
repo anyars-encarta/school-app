@@ -205,8 +205,8 @@ export const assignmentsColumns = [
 
 export const resultsColumns = [
     {
-        header: 'Subject',
-        accessor: 'subject'
+        header: 'Title',
+        accessor: 'title'
     },
     {
         header: 'Student',

@@ -5,55 +5,110 @@ import TeacherTable from '@/components/tables/TeacherTable';
 import TableSearch from '@/components/TableSearch'
 import { teacherColumns } from '@/constants/tableColumns'
 import { role, teachersData } from '@/lib/data'
+import { ITEM_PER_PAGE } from '@/lib/settings';
+import prisma from '@/prisma';
+import { Class, Prisma, Subject, Teacher } from '@prisma/client';
 import Image from 'next/image'
 import Link from 'next/link'
 
-const TeacherList = () => {
-    const renderRow = (item: TeacherParams) => (
-        <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
-            <td className='flex items-center gap-4 p-4'>
-                <Image
-                    src={item.photo || '/user.svg'}
-                    alt='teacher'
-                    width={40}
-                    height={40}
-                    className='md:hidden xl:block w-10 h-10 rounded-full object-cover'
-                />
+type teacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
-                <div className='flex flex-col'>
-                    <h3 className='font-semibold'>{item.name}</h3>
-                    <p className='text-sm text-gray-500'>{item?.email}</p>
-                </div>
-            </td>
+const renderRow = (item: teacherList) => (
+    <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
+        <td className='flex items-center gap-4 p-4'>
+            <Image
+                src={item.img || '/user.svg'}
+                alt='teacher'
+                width={40}
+                height={40}
+                className='md:hidden xl:block w-10 h-10 rounded-full object-cover'
+            />
 
-            <td className='hidden md:table-cell'>{item.teacherId}</td>
-            <td className='hidden md:table-cell'>{item.subjects?.join(",")}</td>
-            <td className='hidden md:table-cell'>{item.classes?.join(",")}</td>
-            <td className='hidden md:table-cell'>{item.phone}</td>
-            <td className='hidden md:table-cell'>{item.address}</td>
+            <div className='flex flex-col'>
+                <h3 className='font-semibold'>{item.name}</h3>
+                <p className='text-sm text-gray-500'>{item?.email}</p>
+            </div>
+        </td>
 
-            <td>
-                <div className='flex items-center gap-2'>
-                    {role === 'admin' && (
-                        <>
-                            <Link href={`/list/teachers/${item.id}`}>
-                                <button className='w-7 h-7 rounded-full flex items-center justify-center bg-encPurple'>
-                                    <Image src='/view.png' alt='' width={16} height={16} />
-                                </button>
-                                {/* <FormModal table='teacher' type='update' data={item} /> */}
-                            </Link>
+        <td className='hidden md:table-cell'>{item.id}</td>
+        <td className='hidden md:table-cell'>{item.subjects.map(subject => subject.name)?.join(",")}</td>
+        <td className='hidden md:table-cell'>{item.classes.map(classItem => classItem.name)?.join(",")}</td>
+        <td className='hidden md:table-cell'>{item.phone}</td>
+        <td className='hidden md:table-cell'>{item.address}</td>
+
+        <td>
+            <div className='flex items-center gap-2'>
+                {role === 'admin' && (
+                    <>
+                        <Link href={`/list/teachers/${item.id}`}>
+                            <button className='w-7 h-7 rounded-full flex items-center justify-center bg-encPurple'>
+                                <Image src='/view.png' alt='' width={16} height={16} />
+                            </button>
+                            {/* <FormModal table='teacher' type='update' data={item} /> */}
+                        </Link>
 
 
-                            {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
-                                <Image src='/delete.png' alt='' width={16} height={16} />
-                            </button> */}
-                            <FormModal table='teacher' type='delete' id={item.id} />
-                        </>
-                    )}
-                </div>
-            </td>
-        </tr>
-    )
+                        {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
+                            <Image src='/delete.png' alt='' width={16} height={16} />
+                        </button> */}
+                        <FormModal table='teacher' type='delete' id={item.id} />
+                    </>
+                )}
+            </div>
+        </td>
+    </tr>
+);
+
+const TeacherList = async ({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | undefined }
+}) => {
+    const { page, ...queryParams } = searchParams;
+
+    const p = page ? parseInt(page) : 1;
+
+    // URL PARAMS CONDITIONS
+    const query: Prisma.TeacherWhereInput = {};
+
+    if (queryParams) {
+        for (const [key, value] of Object.entries(queryParams)) {
+            if (value !== undefined) {
+                switch (key) {
+                    case "classId":
+                        query.lessons = {
+                            some: {
+                                classId: parseInt(value),
+                            },
+                        };
+                        break;
+
+                    case "search":
+                        query.name = {
+                            contains: value,
+                            mode: "insensitive",
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    const [teachers, count] = await prisma.$transaction([
+        prisma.teacher.findMany({
+            where: query,
+            include: {
+                subjects: true,
+                classes: true
+            },
+            take: ITEM_PER_PAGE,
+            skip: ITEM_PER_PAGE * (p - 1)
+        }),
+
+        prisma.teacher.count({ where: query })
+    ])
 
     return (
         <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -84,10 +139,10 @@ const TeacherList = () => {
             </div>
 
             {/* LIST */}
-            <TeacherTable teacherColumns={teacherColumns} renderRow={renderRow} data={teachersData} />
+            <TeacherTable teacherColumns={teacherColumns} renderRow={renderRow} data={teachers} />
 
             {/* PAGINATION */}
-            <Pagination />
+            <Pagination page={p} count={count} />
         </div>
     )
 }
