@@ -10,17 +10,12 @@ const matchers = Object.keys(routeAccessMap).map((route) => ({
 
 console.log('The matchers', matchers);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async(auth, req) => {
   // if (isProtectedRoute(req)) await auth.protect()
 
-  const { sessionClaims } = auth();
-
-  // if (!sessionClaims) {
-  //   console.log('No session claims found. User may not be authenticated.');
-  //   return NextResponse.redirect(new URL('/', req.url)); // Redirect to login or similar
-  // }
-
-  console.log('The claims', sessionClaims)
+  const authObject = await auth();
+  // const {sessionClaims}  = auth(); // From tutorial
+  const sessionClaims = authObject.sessionClaims;
 
   const role = (sessionClaims?.metadata as { role?: string })?.role;
 
