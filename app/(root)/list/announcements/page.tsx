@@ -1,7 +1,6 @@
 import Pagination from '@/components/tables/Pagination'
 import AnnouncementsTable from '@/components/tables/AnnouncementsTable';
 import TableSearch from '@/components/TableSearch'
-import { role, announcementsData } from '@/lib/data'
 import Image from 'next/image'
 import Link from 'next/link'
 import { announcementsColumns } from '@/constants/tableColumns';
@@ -10,10 +9,11 @@ import { AnnouncementsParams } from '@/app/types';
 import { Announcement, Class, Prisma } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { auth } from '@clerk/nextjs/server';
 
-type announcementList = Announcement & { class: Class};
+type announcementList = Announcement & { class: Class };
 
-const renderRow = (item: announcementList) => (
+const renderRow = (item: announcementList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.title}</td>
         <td className='hidden md:table-cell'>{item.description}</td>
@@ -56,6 +56,9 @@ const AnnouncementsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { sessionClaims } = await auth();
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -119,7 +122,7 @@ const AnnouncementsList = async ({
             </div>
 
             {/* LIST */}
-            <AnnouncementsTable announcementsColumns={announcementsColumns} renderRow={renderRow} data={announcements} />
+            <AnnouncementsTable announcementsColumns={announcementsColumns} renderRow={(item) => renderRow(item, role!)} data={announcements} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />

@@ -1,10 +1,19 @@
+import { TableColumnParams } from "@/app/types";
 
 const AnnouncementsTable = (
     {
-        announcementsColumns, renderRow, data
+        announcementsColumns, renderRow, data, role
     }: {
-        announcementsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[]
+        announcementsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
+    const columns = announcementsColumns.map((column) => column);
+    if (role === 'admin') {
+        columns.push({
+            header: 'Actions',
+            accessor: 'actions',
+        });
+    }
+
     return (
         <table className='w-full mt-4'>
             <thead>
