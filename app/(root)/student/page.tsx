@@ -2,7 +2,7 @@
 
 import Announcement from '@/components/Announcement';
 import BigCalendar from '@/components/calendar/BigCalendar';
-import EventCalendar from '@/components/EventCalendar';
+import EventCalendar from '@/components/calendar/EventCalendar';
 
 const StudentPage = () => {
   return (
