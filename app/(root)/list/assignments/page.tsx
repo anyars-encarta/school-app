@@ -28,21 +28,13 @@ const renderRow = (item: assignmentList, role: string) => (
 
         <td>
             <div className='flex items-center gap-2'>
-                {role === 'admin' && (
+                {(role === 'admin' || role === 'teacher') && (
                     <>
                         {/* <Link href={`/list/teachers/${item.id}`}> */}
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='assignment' type='update' data={
-                            {
-                                id: 1,
-                                subject: "Math",
-                                class: "1A",
-                                teacher: "Anthony Boone",
-                                dueDate: "2025-01-01",
-                            }
-                        } />
+                        <FormModal table='assignment' type='update' data={item} />
                         {/* </Link> */}
 
 

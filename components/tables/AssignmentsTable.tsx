@@ -7,7 +7,7 @@ const AssignmentsTable = (
         assignmentsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
     const columns = assignmentsColumns.map((column) => column);
-    if (role === 'admin') {
+    if (role === 'admin' || role === 'teacher') {
         columns.push({
             header: 'Actions',
             accessor: 'actions',
