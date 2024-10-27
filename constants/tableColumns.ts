@@ -197,10 +197,6 @@ export const assignmentsColumns = [
         accessor: 'dueDate',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const resultsColumns = [

@@ -18,7 +18,7 @@ const AnnouncementsTable = (
         <table className='w-full mt-4'>
             <thead>
                 <tr className='text-left text-gray-500 text-sm'>
-                    {announcementsColumns.map((col, i) => (
+                    {columns.map((col, i) => (
                         <th key={i} className={col.className}>{col.header}</th>
                     ))}
                 </tr>

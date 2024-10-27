@@ -1,15 +1,24 @@
+import { TableColumnParams } from "@/app/types";
 
 const AssignmentsTable = (
     {
-        assignmentsColumns, renderRow, data
+        assignmentsColumns, renderRow, data, role
     }: {
-        assignmentsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[]
+        assignmentsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
+    const columns = assignmentsColumns.map((column) => column);
+    if (role === 'admin') {
+        columns.push({
+            header: 'Actions',
+            accessor: 'actions',
+        });
+    }
+
     return (
         <table className='w-full mt-4'>
             <thead>
                 <tr className='text-left text-gray-500 text-sm'>
-                    {assignmentsColumns.map((col, i) => (
+                    {columns.map((col, i) => (
                         <th key={i} className={col.className}>{col.header}</th>
                     ))}
                 </tr>

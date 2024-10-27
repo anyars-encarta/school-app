@@ -10,6 +10,7 @@ import { AssignmentsParams } from '@/app/types';
 import { Assignment, Class, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { auth } from '@clerk/nextjs/server';
 
 type assignmentList = Assignment & { lesson: { 
     subject: Subject,
@@ -17,7 +18,7 @@ type assignmentList = Assignment & { lesson: {
     teacher: Teacher 
 }}
 
-const renderRow = (item: assignmentList) => (
+const renderRow = (item: assignmentList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.lesson.subject.name}</td>
         <td>{item.lesson.class.name}</td>
@@ -60,6 +61,9 @@ const AssignmentsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { sessionClaims } = await auth();
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -137,7 +141,7 @@ const AssignmentsList = async ({
             </div>
 
             {/* LIST */}
-            <AssignmentsTable assignmentsColumns={assignmentsColumns} renderRow={renderRow} data={assignments} />
+            <AssignmentsTable assignmentsColumns={assignmentsColumns} renderRow={(item) => renderRow(item, role!)} data={assignments} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />
