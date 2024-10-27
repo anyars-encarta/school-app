@@ -1,14 +1,17 @@
-'use client';
-
 import { menuItems } from "@/constants/Menu"
 import Image from "next/image"
 import Link from "next/link"
 import { role } from "@/lib/data";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { currentUser } from "@clerk/nextjs/server";
 
-const Menu = () => {
-    const pathname = usePathname();
+const Menu = async () => {
+    // const pathname = usePathname();
+    const user = await currentUser();
+    const role = user?.publicMetadata.role as string;
+
+    console.log('The user', user);
 
     return (
         <div className='mt-4 text-sm'>
@@ -19,7 +22,8 @@ const Menu = () => {
                         <span className='hidden lg:block text-gray-400 font-light my-4'>{item.title}</span>
 
                         {item.items.map((linkItem, index) => {
-                            const isActive = pathname === linkItem.href || pathname.startsWith(`${linkItem.href}/`);
+                            // const isActive = pathname === linkItem.href || pathname.startsWith(`${linkItem.href}/`);
+                            const isActive = '';
 
                             if (linkItem.visible.includes(role)) {
                                 return (
