@@ -11,6 +11,7 @@ import { Assignment, Class, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
 import { auth } from '@clerk/nextjs/server';
+import { getRole } from '@/lib/utils';
 
 type assignmentList = Assignment & { lesson: { 
     subject: Subject,
@@ -61,8 +62,7 @@ const AssignmentsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
-    const { sessionClaims } = await auth();
-    const role = (sessionClaims?.metadata as { role?: string })?.role;
+    const role = await getRole();
 
     const { page, ...queryParams } = searchParams;
 
