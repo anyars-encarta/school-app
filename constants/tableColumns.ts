@@ -212,10 +212,6 @@ export const resultsColumns = [
         accessor: 'date',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const eventsColumns = [

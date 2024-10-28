@@ -1,15 +1,24 @@
+import { TableColumnParams } from "@/app/types";
 
 const ResultsTable = (
     {
-        resultsColumns, renderRow, data
+        resultsColumns, renderRow, data, role
     }: {
-        resultsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[]
+        resultsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
+        const columns = resultsColumns.map((column) => column);
+    if (role === 'admin' || role === 'teacher') {
+        columns.push({
+            header: 'Actions',
+            accessor: 'actions',
+        });
+    };
+
     return (
         <table className='w-full mt-4'>
             <thead>
                 <tr className='text-left text-gray-500 text-sm'>
-                    {resultsColumns.map((col, i) => (
+                    {columns.map((col, i) => (
                         <th key={i} className={col.className}>{col.header}</th>
                     ))}
                 </tr>
