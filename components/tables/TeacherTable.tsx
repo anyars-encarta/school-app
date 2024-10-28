@@ -6,7 +6,7 @@ const TeacherTable = (
     }: {
         teacherColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
-        const columns = teacherColumns.map((column) => column);
+    const columns = teacherColumns.map((column) => column);
     if (role === 'admin') {
         columns.push({
             header: 'Actions',

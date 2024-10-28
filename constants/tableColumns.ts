@@ -89,10 +89,6 @@ export const subjectColumns = [
         accessor: 'teachers',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const classColumns = [

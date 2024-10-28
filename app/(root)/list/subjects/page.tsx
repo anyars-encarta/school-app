@@ -10,10 +10,11 @@ import { SubjectParams } from '@/app/types';
 import { Lesson, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 
 type subjectList = Subject & { teachers: Teacher[] } & { lessons: Lesson[] };
 
-const renderRow = (item: subjectList) => (
+const renderRow = (item: subjectList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.name}</td>
         <td className='hidden md:table-cell'>{item.teachers.map(teacher => teacher.name).join(", ")}</td>
@@ -26,13 +27,7 @@ const renderRow = (item: subjectList) => (
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='subject' type='update' data={
-                            {
-                                id: 1,
-                                name: "Math",
-                                teachers: ["Alice Phelps", "Russell Davidson"],
-                            }
-                        } />
+                        <FormModal table='subject' type='update' data={item} />
                         {/* </Link> */}
 
 
@@ -52,6 +47,8 @@ const SubjectList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -119,7 +116,7 @@ const SubjectList = async ({
             </div>
 
             {/* LIST */}
-            <SubjectTable subjectColumns={subjectColumns} renderRow={renderRow} data={subjects} />
+            <SubjectTable subjectColumns={subjectColumns} renderRow={(item) => renderRow(item, role!)} data={subjects} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />
