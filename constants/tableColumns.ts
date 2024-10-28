@@ -259,10 +259,6 @@ export const eventsColumns = [
         accessor: 'endTime',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const announcementsColumns = [

@@ -10,14 +10,15 @@ import { EventsParams } from '@/app/types';
 import { Class, Event, Prisma } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 
 type eventsList = Event & { class: Class };
 
-const renderRow = (item: eventsList) => (
+const renderRow = (item: eventsList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.title}</td>
         <td className='hidden md:table-cell'>{item.description}</td>
-        <td>{item.class.name}</td>
+        <td>{item.class?.name || '-'}</td>
         <td className='hidden md:table-cell'>{new Intl.DateTimeFormat("en-US").format(item.startTime)}</td>
         <td className='hidden md:table-cell'>{item.startTime.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
         <td className='hidden md:table-cell'>{item.endTime.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
@@ -30,17 +31,7 @@ const renderRow = (item: eventsList) => (
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='event' type='update' data={
-                            {
-                                id: 1,
-                                title: "Lake Trip",
-                                description: "A memorable Lake Trip to entertain both students and teachers. It will be full of fun, excitement and lessons to learn from the trip.",
-                                class: "1A",
-                                date: "2025-01-01",
-                                startTime: "10:00 AM",
-                                endTime: "11:00 AM",
-                            }
-                        } />
+                        <FormModal table='event' type='update' data={item} />
                         {/* </Link> */}
 
 
@@ -60,6 +51,8 @@ const EventsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -80,6 +73,16 @@ const EventsList = async ({
             }
         }
     }
+
+    // ROLE CONDITIONS
+    const roleConditions = {
+        teacher: {lessons: {some: {teacherId: userId!}}},
+        student: {students: {some: {studentId: userId!}}},
+        parent: {students: {some: {parentId: userId!}}},
+        // admin: {}
+    }
+
+    query.OR = [{ classId: null }, { class: roleConditions[role as keyof typeof roleConditions] || {}}];
 
     const [events, count] = await prisma.$transaction([
         prisma.event.findMany({
@@ -123,7 +126,7 @@ const EventsList = async ({
             </div>
 
             {/* LIST */}
-            <EventsTable eventsColumns={eventsColumns} renderRow={renderRow} data={events} />
+            <EventsTable eventsColumns={eventsColumns} renderRow={(item) => renderRow(item, role!)} data={events} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />

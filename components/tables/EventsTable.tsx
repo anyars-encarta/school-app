@@ -1,15 +1,24 @@
+import { TableColumnParams } from "@/app/types";
 
 const EventsTable = (
     {
-        eventsColumns, renderRow, data
+        eventsColumns, renderRow, data, role
     }: {
-        eventsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[]
+        eventsColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
+    const columns = eventsColumns.map((column) => column);
+    if (role === 'admin') {
+        columns.push({
+            header: 'Actions',
+            accessor: 'actions',
+        });
+    }
+
     return (
         <table className='w-full mt-4'>
             <thead>
                 <tr className='text-left text-gray-500 text-sm'>
-                    {eventsColumns.map((col, i) => (
+                    {columns.map((col, i) => (
                         <th key={i} className={col.className}>{col.header}</th>
                     ))}
                 </tr>
