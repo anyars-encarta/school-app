@@ -85,10 +85,6 @@ export const parentColumns = [
         accessor: 'address',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const subjectColumns = [
