@@ -6,6 +6,7 @@ import TableSearch from '@/components/TableSearch'
 import { teacherColumns } from '@/constants/tableColumns'
 import { role, teachersData } from '@/lib/data'
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 import prisma from '@/prisma';
 import { Class, Prisma, Subject, Teacher } from '@prisma/client';
 import Image from 'next/image'
@@ -13,7 +14,7 @@ import Link from 'next/link'
 
 type teacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
-const renderRow = (item: teacherList) => (
+const renderRow = (item: teacherList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>
             <Image
@@ -64,6 +65,8 @@ const TeacherList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -139,7 +142,7 @@ const TeacherList = async ({
             </div>
 
             {/* LIST */}
-            <TeacherTable teacherColumns={teacherColumns} renderRow={renderRow} data={teachers} />
+            <TeacherTable teacherColumns={teacherColumns} renderRow={(item) => renderRow(item, role!)} data={teachers} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />
