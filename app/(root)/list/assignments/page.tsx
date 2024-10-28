@@ -10,14 +10,18 @@ import { AssignmentsParams } from '@/app/types';
 import { Assignment, Class, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { auth } from '@clerk/nextjs/server';
+import { getAuthData } from '@/lib/utils';
 
-type assignmentList = Assignment & { lesson: { 
-    subject: Subject,
-    class: Class,
-    teacher: Teacher 
-}}
+type assignmentList = Assignment & {
+    lesson: {
+        subject: Subject,
+        class: Class,
+        teacher: Teacher
+    }
+}
 
-const renderRow = (item: assignmentList) => (
+const renderRow = (item: assignmentList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.lesson.subject.name}</td>
         <td>{item.lesson.class.name}</td>
@@ -26,21 +30,13 @@ const renderRow = (item: assignmentList) => (
 
         <td>
             <div className='flex items-center gap-2'>
-                {role === 'admin' && (
+                {(role === 'admin' || role === 'teacher') && (
                     <>
                         {/* <Link href={`/list/teachers/${item.id}`}> */}
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='assignment' type='update' data={
-                            {
-                                id: 1,
-                                subject: "Math",
-                                class: "1A",
-                                teacher: "Anthony Boone",
-                                dueDate: "2025-01-01",
-                            }
-                        } />
+                        <FormModal table='assignment' type='update' data={item} />
                         {/* </Link> */}
 
 
@@ -60,27 +56,28 @@ const AssignmentsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
 
     // URL PARAMS CONDITIONS
     const query: Prisma.AssignmentWhereInput = {};
+    query.lesson = {};
 
     if (queryParams) {
         for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
                     case "classId":
-                        query.lesson = { classId: parseInt(value) };
+                        query.lesson.classId = parseInt(value);
                         break;
                     case "teacherId":
-                        query.lesson = { teacherId: value};
+                        query.lesson.teacherId = value;
                         break;
                     case "search":
-                        query.lesson = {
-                            subject: { name: { contains: value, mode: "insensitive" } },
-                        }
+                        query.lesson.subject = { name: { contains: value, mode: "insensitive" } };
                         break;
                     default:
                         break;
@@ -88,6 +85,23 @@ const AssignmentsList = async ({
             }
         }
     }
+
+    // ROLE CONDITION
+    switch (role) {
+        case 'admin':
+            break;
+        case 'teacher':
+            query.lesson.teacherId = userId!;
+            break;
+        case 'student':
+            query.lesson.class = { students: { some: { id: userId! } } };
+            break;
+        case 'parent':
+            query.lesson.class = { students: { some: { parentId: userId! } } };
+            break;
+        default:
+            break;
+    };
 
     const [assignments, count] = await prisma.$transaction([
         prisma.assignment.findMany({
@@ -137,7 +151,7 @@ const AssignmentsList = async ({
             </div>
 
             {/* LIST */}
-            <AssignmentsTable assignmentsColumns={assignmentsColumns} renderRow={renderRow} data={assignments} />
+            <AssignmentsTable assignmentsColumns={assignmentsColumns} renderRow={(item) => renderRow(item, role!)} data={assignments} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />

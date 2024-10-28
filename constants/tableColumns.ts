@@ -28,10 +28,6 @@ export const teacherColumns = [
         accessor: 'address',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const studentColumns = [
@@ -59,10 +55,6 @@ export const studentColumns = [
         accessor: 'address',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const parentColumns = [
@@ -85,10 +77,6 @@ export const parentColumns = [
         accessor: 'address',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const subjectColumns = [
@@ -100,10 +88,6 @@ export const subjectColumns = [
         header: 'Teachers',
         accessor: 'teachers',
         className: 'hidden md:table-cell'
-    },
-    {
-        header: 'Actions',
-        accessor: 'actions',
     },
 ];
 
@@ -127,10 +111,6 @@ export const classColumns = [
         accessor: 'supervisor',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const lessonColumns = [
@@ -146,10 +126,6 @@ export const lessonColumns = [
         header: 'Teacher',
         accessor: 'teacher',
         className: 'hidden md:table-cell'
-    },
-    {
-        header: 'Actions',
-        accessor: 'actions',
     },
 ];
 
@@ -172,10 +148,6 @@ export const examsColumns = [
         accessor: 'date',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const assignmentsColumns = [
@@ -196,10 +168,6 @@ export const assignmentsColumns = [
         header: 'Due Date',
         accessor: 'dueDate',
         className: 'hidden md:table-cell'
-    },
-    {
-        header: 'Actions',
-        accessor: 'actions',
     },
 ];
 
@@ -232,10 +200,6 @@ export const resultsColumns = [
         accessor: 'date',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const eventsColumns = [
@@ -267,10 +231,6 @@ export const eventsColumns = [
         accessor: 'endTime',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const announcementsColumns = [
@@ -291,9 +251,5 @@ export const announcementsColumns = [
         header: 'Date',
         accessor: 'date',
         className: 'hidden md:table-cell'
-    },
-    {
-        header: 'Actions',
-        accessor: 'actions',
     },
 ];

@@ -1,15 +1,24 @@
+import { TableColumnParams } from "@/app/types";
 
 const ClassTable = (
     {
-        classColumns, renderRow, data
+        classColumns, renderRow, data, role
     }: {
-        classColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[]
+        classColumns: TableColumnParams[], renderRow: (item: any) => React.ReactNode, data: any[], role: string
     }) => {
+    const columns = classColumns.map((column) => column);
+    if (role === 'admin') {
+        columns.push({
+            header: 'Actions',
+            accessor: 'actions',
+        });
+    }
+
     return (
         <table className='w-full mt-4'>
             <thead>
                 <tr className='text-left text-gray-500 text-sm'>
-                    {classColumns.map((col, i) => (
+                    {columns.map((col, i) => (
                         <th key={i} className={col.className}>{col.header}</th>
                     ))}
                 </tr>

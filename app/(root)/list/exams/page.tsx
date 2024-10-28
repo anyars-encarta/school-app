@@ -10,6 +10,7 @@ import { ExamsParams } from '@/app/types';
 import { Class, Exam, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 
 type examList = Exam & { lesson: { 
     subject: Subject,
@@ -17,7 +18,7 @@ type examList = Exam & { lesson: {
     teacher: Teacher 
 }}
 
-const renderRow = (item: examList) => (
+const renderRow = (item: examList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.lesson.subject.name}</td>
         <td>{item.lesson.class.name}</td>
@@ -26,21 +27,13 @@ const renderRow = (item: examList) => (
 
         <td>
             <div className='flex items-center gap-2'>
-                {role === 'admin' && (
+                {role === 'admin' || role === 'teacher'  && (
                     <>
                         {/* <Link href={`/list/teachers/${item.id}`}> */}
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='exam' type='update' data={
-                            {
-                                id: 1,
-                                subject: "Math",
-                                class: "1A",
-                                teacher: "Martha Morris",
-                                date: "2025-01-01",
-                            }
-                        } />
+                        <FormModal table='exam' type='update' data={item} />
                         {/* </Link> */}
 
 
@@ -60,6 +53,8 @@ const ExamsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -67,19 +62,20 @@ const ExamsList = async ({
     // URL PARAMS CONDITIONS
     const query: Prisma.ExamWhereInput = {};
 
+    query.lesson = {};
+
     if (queryParams) {
         for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
                     case "classId":
-                        query.lesson = { classId: parseInt(value) };
+                        query.lesson.classId = parseInt(value);
                         break;
                     case "teacherId":
-                        query.lesson = { teacherId: value};
+                        query.lesson.teacherId = value;
                         break;
                     case "search":
-                        query.lesson = {
-                            subject: { name: { contains: value, mode: "insensitive" } },
+                        query.lesson.subject = { name: { contains: value, mode: "insensitive" },
                         }
                         break;
                     default:
@@ -88,6 +84,23 @@ const ExamsList = async ({
             }
         }
     }
+
+    // ROLE CONDITIONS
+    switch (role) {
+        case "admin":
+            break;
+        case "teacher":
+            query.lesson.teacherId = userId!;
+            break;
+        case "student":
+            query.lesson.class = { students: { some: { id: userId! } } };
+            break;
+        case "parent":
+            query.lesson.class = { students: { some: { parentId: userId! } } };
+            break;
+        default:
+            break;  
+    };
 
     const [exams, count] = await prisma.$transaction([
         prisma.exam.findMany({
@@ -137,7 +150,7 @@ const ExamsList = async ({
             </div>
 
             {/* LIST */}
-            <ExamsTable examsColumns={examsColumns} renderRow={renderRow} data={exams} />
+            <ExamsTable examsColumns={examsColumns} renderRow={(item) => renderRow(item, role!)} data={exams} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />

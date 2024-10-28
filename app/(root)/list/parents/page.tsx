@@ -10,10 +10,11 @@ import { ParentParams } from '@/app/types';
 import { Parent, Prisma, Student } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 
 type parentList = Parent & { students: Student[] };
 
-const renderRow = (item: parentList) => (
+const renderRow = (item: parentList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>
             <div className='flex flex-col'>
@@ -34,18 +35,7 @@ const renderRow = (item: parentList) => (
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='parent' type='update' data={
-                            {
-                                id: 1,
-                                username: "John-parent",
-                                firstName: 'John-Parent',
-                                lastName: 'Doe-parent',
-                                students: ["Sarah Brewer"],
-                                email: "john@doe.com",
-                                phone: "1234567890",
-                                address: "123 Main St, Anytown, USA",
-                            }
-                        } />
+                        <FormModal table='parent' type='update' data={item} />
                         {/* </Link> */}
 
                         {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
@@ -64,6 +54,8 @@ const ParentList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -130,7 +122,7 @@ const ParentList = async ({
             </div>
 
             {/* LIST */}
-            <ParentTable parentColumns={parentColumns} renderRow={renderRow} data={parents} />
+            <ParentTable parentColumns={parentColumns} renderRow={(item) => renderRow(item, role!)} data={parents} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />
