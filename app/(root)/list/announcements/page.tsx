@@ -10,7 +10,7 @@ import { Announcement, Class, Prisma } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
 import { auth } from '@clerk/nextjs/server';
-import { getRole } from '@/lib/utils';
+import { getAuthData } from '@/lib/utils';
 
 type announcementList = Announcement & { class: Class };
 
@@ -18,7 +18,7 @@ const renderRow = (item: announcementList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.title}</td>
         <td className='hidden md:table-cell'>{item.description}</td>
-        <td>{item.class.name}</td>
+        <td>{item.class?.name || '-'}</td>
         <td className='hidden md:table-cell'>{new Intl.DateTimeFormat("en-US").format(item.date)}</td>
 
         <td>
@@ -57,7 +57,7 @@ const AnnouncementsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
-    const role = await getRole();
+    const { userId, role } = await getAuthData();
 
     const { page, ...queryParams } = searchParams;
 
@@ -79,6 +79,16 @@ const AnnouncementsList = async ({
             }
         }
     }
+
+    // ROLE CONDITIONS
+    const roleConditions = {
+        teacher: {lessons: {some: {teacherId: userId!}}},
+        student: {students: {some: {studentId: userId!}}},
+        parent: {students: {some: {parentId: userId!}}},
+        // admin: {}
+    }
+
+    query.OR = [{ classId: null }, { class: roleConditions[role as keyof typeof roleConditions] || {}}];
 
     const [announcements, count] = await prisma.$transaction([
         prisma.announcement.findMany({
