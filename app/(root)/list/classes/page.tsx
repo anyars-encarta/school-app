@@ -10,10 +10,11 @@ import { ClassesParams } from '@/app/types';
 import { Announcement, Class, Lesson, Prisma, Student, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 
 type classList = Class & { supervisor: Teacher }
 
-const renderRow = (item: classList) => (
+const renderRow = (item: classList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.name}</td>
         <td className='hidden md:table-cell'>{item.capacity}</td>
@@ -28,15 +29,7 @@ const renderRow = (item: classList) => (
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='class' type='update' data={
-                            {
-                                id: 1,
-                                name: "1A",
-                                capacity: 20,
-                                grade: 1,
-                                supervisor: "Joseph Padilla",
-                            }
-                        } />
+                        <FormModal table='class' type='update' data={item} />
                         {/* </Link> */}
 
 
@@ -56,6 +49,8 @@ const ClassesList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -125,7 +120,7 @@ const ClassesList = async ({
             </div>
 
             {/* LIST */}
-            <ClassTable classColumns={classColumns} renderRow={renderRow} data={classes} />
+            <ClassTable classColumns={classColumns} renderRow={(item) => renderRow(item, role!)} data={classes} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />
