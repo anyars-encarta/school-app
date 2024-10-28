@@ -10,10 +10,11 @@ import { LessonsParams } from '@/app/types';
 import { Class, Lesson, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
+import { getAuthData } from '@/lib/utils';
 
 type lessonList = Lesson & { subject: Subject } & { class: Class } & { teacher: Teacher }
 
-const renderRow = (item: lessonList) => (
+const renderRow = (item: lessonList, role: string) => (
     <tr key={item.id} className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-encSkyLight'>
         <td className='flex items-center gap-4 p-4'>{item.subject.name}</td>
         <td>{item.class.name}</td>
@@ -21,20 +22,13 @@ const renderRow = (item: lessonList) => (
 
         <td>
             <div className='flex items-center gap-2'>
-                {role === 'admin' && (
+                {role === 'admin' || role === 'teacher' && (
                     <>
                         {/* <Link href={`/list/teachers/${item.id}`}> */}
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='lesson' type='update' data={
-                            {
-                                id: 1,
-                                subject: "Math",
-                                class: "1A",
-                                teacher: "Tommy Wise",
-                            }
-                        } />
+                        <FormModal table='lesson' type='update' data={item} />
                         {/* </Link> */}
 
 
@@ -54,6 +48,8 @@ const LessonsList = async ({
 }: {
     searchParams: { [key: string]: string | undefined }
 }) => {
+    const { userId, role } = await getAuthData();
+
     const { page, ...queryParams } = searchParams;
 
     const p = page ? parseInt(page) : 1;
@@ -117,7 +113,7 @@ const LessonsList = async ({
                             <Image src='/sort.png' alt='filter' width={14} height={14} />
                         </button>
 
-                        {role === 'admin' && (
+                        {role === 'admin' || role === 'teacher' && (
                             // <button className='w-8 h-8 rounded-full bg-encYellow flex items-center justify-center'>
                             //     <Image src='/create.png' alt='filter' width={14} height={14} />
                             // </button>
@@ -128,7 +124,7 @@ const LessonsList = async ({
             </div>
 
             {/* LIST */}
-            <LessonTable lessonColumns={lessonColumns} renderRow={renderRow} data={lessons} />
+            <LessonTable lessonColumns={lessonColumns} renderRow={(item) => renderRow(item, role!)} data={lessons} role={role!} />
 
             {/* PAGINATION */}
             <Pagination page={p} count={count} />

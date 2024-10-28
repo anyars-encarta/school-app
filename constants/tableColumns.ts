@@ -143,10 +143,6 @@ export const lessonColumns = [
         accessor: 'teacher',
         className: 'hidden md:table-cell'
     },
-    {
-        header: 'Actions',
-        accessor: 'actions',
-    },
 ];
 
 export const examsColumns = [
