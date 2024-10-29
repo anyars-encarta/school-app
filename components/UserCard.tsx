@@ -11,9 +11,8 @@ const UserCard = async ({ type }: { type: "admin" | "teacher" | "student" | "par
 
   const data = await modelMap[type].count();
 
-  const currentYear = new Date().getFullYear();
-  const nextYear = currentYear + 1;
-  const academicYear = `${currentYear}/${nextYear % 100}`;
+  const fullYear = new Date().getFullYear();
+  const academicYear = `${fullYear} / ${(fullYear + 1) % 100}`;
 
   return (
     <div className='rounded-2xl odd:bg-encPurple even:bg-encYellow p-4 flex-1 min-w-[130px]'>
