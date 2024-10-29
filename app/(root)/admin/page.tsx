@@ -5,6 +5,7 @@ import FinanceChart from '@/components/charts/FinanceChart';
 import Announcement from '@/components/Announcement';
 import EventCalendar from '@/components/calendar/EventCalendar';
 import CountChartContainer from '@/components/charts/CountChartContainer';
+import AttendanceChartContainer from '@/components/charts/AttendanceChartContainer';
 
 const AdminPage = () => {
   return (
@@ -27,7 +28,7 @@ const AdminPage = () => {
 
           {/* ATTENDANCE CHART */}
           <div className='w-2/3'>
-            <AttendanceChart />
+            <AttendanceChartContainer />
           </div>
         </div>
 
