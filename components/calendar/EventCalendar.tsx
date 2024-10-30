@@ -1,22 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Events from '../Event';
+import Event from '../Event';
+import { useRouter } from 'next/navigation';
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const EventCalendar = () => {
+const EventCalendar = ({ eventsData }: { eventsData: any}) => {
     const [value, onChange] = useState<Value>(new Date());
 
+    const data = eventsData;
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if(value instanceof Date) {
+            router.push(`?date=${value}`)
+        }
+    }, [value, router]);
+
     return (
-        <div className='bg-white rounded-md'>
+        <div className='bg-white p-4 rounded-md'>
             <Calendar onChange={onChange} value={value} />
 
-            <Events />
+            <Event eventsData={data} />
         </div>
     )
 }
