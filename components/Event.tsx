@@ -2,7 +2,7 @@
 // import prisma from '@/prisma';
 import Image from 'next/image'
 
-const Event = async ({ eventsData }: { eventsData: any }) => {
+const Event = async ({ eventsData }: { eventsData: [] }) => {
     return (
         <div className='p-4'>
             {/* TITLE */}

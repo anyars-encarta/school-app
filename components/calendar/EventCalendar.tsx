@@ -10,26 +10,20 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const EventCalendar = ({ eventsData }: { eventsData: any}) => {
+const EventCalendar = () => {
     const [value, onChange] = useState<Value>(new Date());
-
-    const data = eventsData;
 
     const router = useRouter();
 
     useEffect(() => {
         if(value instanceof Date) {
-            router.push(`?date=${value}`)
+            router.push(`?date=${value.toLocaleDateString('en-US')}`);
         }
     }, [value, router]);
 
     return (
-        <div className='bg-white p-4 rounded-md'>
-            <Calendar onChange={onChange} value={value} />
-
-            <Event eventsData={data} />
-        </div>
+        <Calendar onChange={onChange} value={value} />
     )
 }
 
-export default EventCalendar
+export default EventCalendar;
