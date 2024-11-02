@@ -1,10 +1,12 @@
 import { announcementsData } from '@/lib/data';
 import { getAuthData } from '@/lib/utils';
 import prisma from '@/prisma';
-
+// import { auth } from '@clerk/nextjs/server';
 
 const Announcement = async () => {
     const { userId, role } = await getAuthData();
+    // const { userId, sessionClaims } = await auth();
+    // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
     const roleConditions = {
         teacher: { lessons: { some: { teacherId: userId! } } },
