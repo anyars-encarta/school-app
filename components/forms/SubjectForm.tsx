@@ -6,6 +6,7 @@ import { z } from "zod";
 import CustomInputField from "../CustomInputField";
 import Image from "next/image";
 import { SubjectInputs, subjectSchema } from "@/lib/formValidationSchemas";
+import { createSubject } from "@/lib/actions";
 
 const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) => {
     const {
@@ -17,7 +18,7 @@ const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
     });
 
     const createStudent = handleSubmit(data => {
-        console.log(data)
+        createSubject(data)
     });
 
     
@@ -35,14 +36,14 @@ const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
                     error={errors?.name}
                 />
 
-                <CustomInputField
+                {/* <CustomInputField
                     label='Teachers'
                     type='text'
                     register={register}
                     name='teachers'
                     defaultValue={data?.teachers}
                     error={errors?.teachers}
-                />
+                /> */}
             </div>
 
             <button type='submit' className='bg-blue-400 text-white p-2 rounded-md'>{type === 'create' ? 'Create' : 'Update'}</button>
