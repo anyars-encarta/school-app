@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 
 const Menu = async () => {
-    // const pathname = usePathname();
     const user = await currentUser();
     const role = user?.publicMetadata.role as string;
 
