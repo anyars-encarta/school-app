@@ -6,8 +6,11 @@ import CustomInputField from "../CustomInputField";
 import { SubjectInputs, subjectSchema } from "@/lib/formValidationSchemas";
 import { createSubject } from "@/lib/actions";
 import { useFormState } from "react-dom";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
-const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) => {
+const SubjectForm = ({ setOpen, type, data }: { setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any }) => {
     const {
         register,
         handleSubmit,
@@ -25,6 +28,16 @@ const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
     const createSubjectHandler = handleSubmit(data => {
         FormAction(data)
     });
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (state.success) {
+            toast(`Subject ${type === 'create' ? 'created' : 'updated'} successfully!`)
+            router.refresh();
+            setOpen(false);
+        }
+    }, [state]);
 
     return (
         <form onSubmit={createSubjectHandler} className='flex  flex-col gap-8'>

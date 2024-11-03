@@ -13,7 +13,6 @@ export const createSubject = async (currentState: CurrentState, data: SubjectInp
             } 
         })
         
-        revalidatePath("/list/subjects");
         return {success: true, error: false}
     } catch(e) {
         console.error(e);

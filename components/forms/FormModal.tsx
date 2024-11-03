@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import dynamic from "next/dynamic";
 import SpinnerLoader from "./SpinnerLoader";
 // import TeacherForm from "./TeacherForm";
@@ -54,19 +54,19 @@ const AnnouncementForm = dynamic(() => import("./AnnouncementForm"), {
 });
 
 const forms: {
-    [key: string]: (type: 'create' | 'update', data?: any) => JSX.Element;
+    [key: string]: (setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any) => JSX.Element;
 } = {
-    teacher: (type, data) => <TeacherForm type={type} data={data} />,
-    student: (type, data) => <StudentForm type={type} data={data} />,
-    parent: (type, data) => <ParentForm type={type} data={data} />,
-    subject: (type, data) => <SubjectForm type={type} data={data} />,
-    class: (type, data) => <ClassForm type={type} data={data} />,
-    lesson: (type, data) => <LessonForm type={type} data={data} />,
-    exam: (type, data) => <ExamForm type={type} data={data} />,
-    assignment: (type, data) => <AssignmentForm type={type} data={data} />,
-    result: (type, data) => <ResultForm type={type} data={data} />,
-    event: (type, data) => <EventForm type={type} data={data} />,
-    announcement: (type, data) => <AnnouncementForm type={type} data={data} />,
+    teacher: (setOpen, type, data) => <TeacherForm type={type} data={data} setOpen={setOpen} />,
+    student: (setOpen, type, data) => <StudentForm type={type} data={data} setOpen={setOpen} />,
+    parent: (setOpen, type, data) => <ParentForm type={type} data={data} setOpen={setOpen} />,
+    subject: (setOpen, type, data) => <SubjectForm type={type} data={data} setOpen={setOpen} />,
+    class: (setOpen, type, data) => <ClassForm type={type} data={data} setOpen={setOpen} />,
+    lesson: (setOpen, type, data) => <LessonForm type={type} data={data} setOpen={setOpen} />,
+    exam: (setOpen, type, data) => <ExamForm type={type} data={data} setOpen={setOpen} />,
+    assignment: (setOpen, type, data) => <AssignmentForm type={type} data={data} setOpen={setOpen} />,
+    result: (setOpen, type, data) => <ResultForm type={type} data={data} setOpen={setOpen} />,
+    event: (setOpen, type, data) => <EventForm type={type} data={data} setOpen={setOpen} />,
+    announcement: (setOpen, type, data) => <AnnouncementForm type={type} data={data} setOpen={setOpen} />,
 };
 
 const FormModal = ({
@@ -106,7 +106,7 @@ const FormModal = ({
                     <button className='bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center'>Delete</button>
                 </form>
             ) : type === 'create' || type === 'update' ? (
-                forms[table](type, data)
+                forms[table](setOpen, type, data)
             ): (
                 'Form Not found'
             )
