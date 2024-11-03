@@ -2,11 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import CustomInputField from "../CustomInputField";
-import Image from "next/image";
 import { SubjectInputs, subjectSchema } from "@/lib/formValidationSchemas";
 import { createSubject } from "@/lib/actions";
+import { useFormState } from "react-dom";
 
 const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) => {
     const {
@@ -17,13 +16,18 @@ const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
         resolver: zodResolver(subjectSchema),
     });
 
-    const createStudent = handleSubmit(data => {
-        createSubject(data)
+    // AFTER REACT 19, IT WILL BE USEACTIONSTATE
+    const [state, FormAction] = useFormState(createSubject, {
+        success: false,
+        error: false
     });
 
-    
+    const createSubjectHandler = handleSubmit(data => {
+        FormAction(data)
+    });
+
     return (
-        <form onSubmit={createStudent} className='flex  flex-col gap-8'>
+        <form onSubmit={createSubjectHandler} className='flex  flex-col gap-8'>
             <h1 className='text-xl font-semibold'>{type === 'create' ? 'Create a new Subject' : `Update details for ${data?.name}`}</h1>
 
             <div className='flex items-center justify-between flex-wrap gap-4'>
@@ -45,6 +49,8 @@ const SubjectForm = ({ type, data }: { type: 'create' | 'update', data?: any }) 
                     error={errors?.teachers}
                 /> */}
             </div>
+
+            {state.error && <span className='text-red-500'>Something went wrong!</span>}
 
             <button type='submit' className='bg-blue-400 text-white p-2 rounded-md'>{type === 'create' ? 'Create' : 'Update'}</button>
         </form>
