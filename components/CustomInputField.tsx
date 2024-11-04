@@ -1,14 +1,14 @@
 import { CustomInputFieldParams } from '@/app/types';
 
-const CustomInputField = ({ 
-    label, 
-    type = 'text', 
-    register, 
-    name, 
-    defaultValue, 
+const CustomInputField = ({
+    label,
+    type = 'text',
+    register,
+    name,
+    defaultValue,
     error,
     hidden,
-    inputProps 
+    inputProps
 }: CustomInputFieldParams) => {
 
     return (

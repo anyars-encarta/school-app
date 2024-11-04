@@ -26,7 +26,6 @@ const SubjectForm = ({ setOpen, type, data }: { setOpen: Dispatch<SetStateAction
     });
 
     const createSubjectHandler = handleSubmit((data) => {
-        console.log(data);
         FormAction(data);
     });
 
