@@ -1,12 +1,31 @@
 'use client';
 
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import SpinnerLoader from "./SpinnerLoader";
+import { useFormState } from "react-dom";
+import { deleteAnnouncement, deleteAssignment, deleteAttendance, deleteClass, deleteEvent, deleteExam, deleteLesson, deleteParent, deleteResult, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 // import TeacherForm from "./TeacherForm";
 // import StudentForm from "./StudentForm";
 // import ParentForm from "./ParentForm";
+
+const deleteActionMap = {
+    subject: deleteSubject,
+    class: deleteClass,
+    teacher: deleteTeacher,
+    student: deleteStudent,
+    parent: deleteParent,
+    lesson: deleteLesson,
+    exam: deleteExam,
+    assignment: deleteAssignment,
+    result: deleteResult,
+    attendance: deleteAttendance,
+    event: deleteEvent,
+    announcement: deleteAnnouncement
+};
 
 // LAZY LOADING IMPORTS
 const TeacherForm = dynamic(() => import("./TeacherForm"), {
@@ -90,7 +109,7 @@ const FormModal = ({
     | 'event'
     | 'announcement';
     type: 'create' | 'update' | 'delete';
-    data?: any
+    data?: any;
     id?: number | string;
 }) => {
     const size = type === 'create' ? 'w-8 h-8' : 'w-7 h-7'
@@ -99,6 +118,25 @@ const FormModal = ({
     const [open, setOpen] = useState(false);
 
     const Form = () => {
+        const [state, FormAction] = useFormState(deleteActionMap[table], {
+            success: false,
+            error: false
+        });
+    
+        // const deleteSubjectHandler = handleSubmit((data) => {
+        //     FormAction(data);
+        // });
+    
+        const router = useRouter();
+    
+        useEffect(() => {
+            if (state.success) {
+                toast(`Subject deleted successfully!`)
+                router.refresh();
+                setOpen(false);
+            }
+        }, [state]);
+
         return (
             type === 'delete' && id ? (
                 <form action="" className='p-4 flex flex-col gap-4'>

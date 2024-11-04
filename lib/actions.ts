@@ -19,7 +19,7 @@ export const createSubject = async (currentState: CurrentState, data: SubjectInp
 
 export const updateSubject = async (currentState: CurrentState, data: SubjectInputs) => {
     try {
-        const result = await prisma.subject.update({
+        await prisma.subject.update({
             where: { id: data.id },
             data: { name: data.name },
         });
@@ -30,3 +30,60 @@ export const updateSubject = async (currentState: CurrentState, data: SubjectInp
         return { success: false, error: true }
     }
 }
+
+export const deleteSubject = async (currentState: CurrentState, data: SubjectInputs) => {
+    try {
+        await prisma.subject.delete({
+            where: { id: data.id },
+        });
+
+        return { success: true, error: false }
+    } catch (e) {
+        console.error('Error updating subject:', e);
+        return { success: false, error: true }
+    }
+}
+
+export const deleteStudent = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteParent = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteTeacher = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteClass = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteLesson = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteExam = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteAssignment = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteResult = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteEvent = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteAttendance = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
+
+export const deleteAnnouncement = async (currentState: CurrentState, data: SubjectInputs) => {
+
+};
