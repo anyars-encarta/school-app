@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CustomInputField from "../CustomInputField";
 import { SubjectInputs, subjectSchema } from "@/lib/formValidationSchemas";
-import { createSubject } from "@/lib/actions";
+import { createSubject, updateSubject } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -20,13 +20,14 @@ const SubjectForm = ({ setOpen, type, data }: { setOpen: Dispatch<SetStateAction
     });
 
     // AFTER REACT 19, IT WILL BE USEACTIONSTATE
-    const [state, FormAction] = useFormState(createSubject, {
+    const [state, FormAction] = useFormState(type === 'create' ? createSubject : updateSubject, {
         success: false,
         error: false
     });
 
-    const createSubjectHandler = handleSubmit(data => {
-        FormAction(data)
+    const createSubjectHandler = handleSubmit((data) => {
+        console.log(data);
+        FormAction(data);
     });
 
     const router = useRouter();
@@ -53,12 +54,23 @@ const SubjectForm = ({ setOpen, type, data }: { setOpen: Dispatch<SetStateAction
                     error={errors?.name}
                 />
 
+                {data && (
+                    <CustomInputField
+                        label="Id"
+                        name="id"
+                        defaultValue={data?.id}
+                        register={register}
+                        error={errors?.id}
+                        hidden
+                    />
+                )}
+
                 {/* <CustomInputField
                     label='Teachers'
                     type='text'
                     register={register}
                     name='teachers'
-                    defaultValue={data?.teachers}
+                    defaultValue={data?.id}
                     error={errors?.teachers}
                 /> */}
             </div>
