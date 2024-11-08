@@ -8,6 +8,7 @@ import { useFormState } from "react-dom";
 import { deleteAnnouncement, deleteAssignment, deleteAttendance, deleteClass, deleteEvent, deleteExam, deleteLesson, deleteParent, deleteResult, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { FormContainerProps } from "./FormContainer";
 // import TeacherForm from "./TeacherForm";
 // import StudentForm from "./StudentForm";
 // import ParentForm from "./ParentForm";
@@ -92,43 +93,29 @@ const FormModal = ({
     table,
     type,
     data,
-    id
-}: {
-    table:
-    'teacher'
-    | 'student'
-    | 'parent'
-    | 'parent'
-    | 'subject'
-    | 'class'
-    | 'lesson'
-    | 'exam'
-    | 'assignment'
-    | 'result'
-    | 'attendance'
-    | 'event'
-    | 'announcement';
-    type: 'create' | 'update' | 'delete';
-    data?: any;
-    id?: number | string;
-}) => {
+    id,
+    relatedData,
+}: FormContainerProps & { relatedData?: any }) => {
     const size = type === 'create' ? 'w-8 h-8' : 'w-7 h-7'
     const bgColor = type === 'create' ? 'bg-encYellow' : type === 'update' ? 'bg-encSky' : 'bg-encPurple';
 
     const [open, setOpen] = useState(false);
+    console.log("Just received related Data", relatedData);
 
     const Form = () => {
+        console.log("Related Data not reaching form", relatedData);
+        
         const [state, FormAction] = useFormState(deleteActionMap[table], {
             success: false,
             error: false
         });
-    
+
         // const deleteSubjectHandler = handleSubmit((data) => {
         //     FormAction(data);
         // });
-    
+
         const router = useRouter();
-    
+
         useEffect(() => {
             if (state.success) {
                 toast(`Subject deleted successfully!`)
@@ -146,7 +133,7 @@ const FormModal = ({
                 </form>
             ) : type === 'create' || type === 'update' ? (
                 forms[table](setOpen, type, data)
-            ): (
+            ) : (
                 'Form Not found'
             )
         )
