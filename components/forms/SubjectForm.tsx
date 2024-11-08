@@ -19,6 +19,8 @@ const SubjectForm = ({ setOpen, type, data, relatedData }: { setOpen: Dispatch<S
         resolver: zodResolver(subjectSchema),
     });
 
+    console.log("showing in SubjectForm", relatedData);
+
     // AFTER REACT 19, IT WILL BE USEACTIONSTATE
     const [state, FormAction] = useFormState(type === 'create' ? createSubject : updateSubject, {
         success: false,
@@ -38,6 +40,8 @@ const SubjectForm = ({ setOpen, type, data, relatedData }: { setOpen: Dispatch<S
             setOpen(false);
         }
     }, [state]);
+
+    const {teachers} = relatedData;
 
     return (
         <form onSubmit={createSubjectHandler} className='flex  flex-col gap-8'>
@@ -64,14 +68,27 @@ const SubjectForm = ({ setOpen, type, data, relatedData }: { setOpen: Dispatch<S
                     />
                 )}
 
-                {/* <CustomInputField
-                    label='Teachers'
-                    type='text'
-                    register={register}
-                    name='teachers'
-                    defaultValue={data?.id}
-                    error={errors?.teachers}
-                /> */}
+                <div className='flex flex-col gap-2 w-full md:w-1/4'>
+                    <label htmlFor='teachers' className='text-xs text-gray-500'>
+                        Teachers
+                    </label>
+
+                    <select
+                        multiple
+                        id="teachers"
+                        className='ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full'
+                        {...register("teachers")}
+                        defaultValue={data?.teachers}
+                    >
+                        {teachers.map((teacher: {id: string, name: string, surname: string}) => (
+                            <option key={teacher.id} value={teacher.id}>{teacher.name + " " + teacher.surname}</option>
+                        ))}
+                    </select>
+
+                    {errors.teachers?.message &&
+                        <p className='text-xs text-red-500'>{errors.teachers.message.toString()}</p>
+                    }
+                </div>
             </div>
 
             {state.error && <span className='text-red-500'>Something went wrong!</span>}

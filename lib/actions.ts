@@ -7,7 +7,12 @@ type CurrentState = { success: boolean, error: boolean }
 export const createSubject = async (currentState: CurrentState, data: SubjectInputs) => {
     try {
         await prisma.subject.create({
-            data: { name: data.name }
+            data: { 
+                name: data.name,
+                teachers: { 
+                    connect: data.teachers?.map((teacherId) => ({ id: teacherId })),
+                }
+            }
         })
 
         return { success: true, error: false }
@@ -21,7 +26,12 @@ export const updateSubject = async (currentState: CurrentState, data: SubjectInp
     try {
         await prisma.subject.update({
             where: { id: data.id },
-            data: { name: data.name },
+            data: { 
+                name: data.name,
+                teachers: {
+                    set: data.teachers?.map((teacherId) => ({ id: teacherId })),
+                }
+            },
         });
 
         return { success: true, error: false }
