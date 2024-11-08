@@ -10,7 +10,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const SubjectForm = ({ setOpen, type, data }: { setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any }) => {
+const SubjectForm = ({ setOpen, type, data, relatedData }: { setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any, relatedData?: any }) => {
     const {
         register,
         handleSubmit,

@@ -74,19 +74,19 @@ const AnnouncementForm = dynamic(() => import("./AnnouncementForm"), {
 });
 
 const forms: {
-    [key: string]: (setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any) => JSX.Element;
+    [key: string]: (setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any, relatedData?: any) => JSX.Element;
 } = {
-    teacher: (setOpen, type, data) => <TeacherForm type={type} data={data} setOpen={setOpen} />,
-    student: (setOpen, type, data) => <StudentForm type={type} data={data} setOpen={setOpen} />,
-    parent: (setOpen, type, data) => <ParentForm type={type} data={data} setOpen={setOpen} />,
-    subject: (setOpen, type, data) => <SubjectForm type={type} data={data} setOpen={setOpen} />,
-    class: (setOpen, type, data) => <ClassForm type={type} data={data} setOpen={setOpen} />,
-    lesson: (setOpen, type, data) => <LessonForm type={type} data={data} setOpen={setOpen} />,
-    exam: (setOpen, type, data) => <ExamForm type={type} data={data} setOpen={setOpen} />,
-    assignment: (setOpen, type, data) => <AssignmentForm type={type} data={data} setOpen={setOpen} />,
-    result: (setOpen, type, data) => <ResultForm type={type} data={data} setOpen={setOpen} />,
-    event: (setOpen, type, data) => <EventForm type={type} data={data} setOpen={setOpen} />,
-    announcement: (setOpen, type, data) => <AnnouncementForm type={type} data={data} setOpen={setOpen} />,
+    teacher: (setOpen, type, data) => <TeacherForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    student: (setOpen, type, data) => <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    parent: (setOpen, type, data) => <ParentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    subject: (setOpen, type, data) => <SubjectForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    class: (setOpen, type, data) => <ClassForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    lesson: (setOpen, type, data) => <LessonForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    exam: (setOpen, type, data) => <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    assignment: (setOpen, type, data) => <AssignmentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    result: (setOpen, type, data) => <ResultForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    event: (setOpen, type, data) => <EventForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    announcement: (setOpen, type, data) => <AnnouncementForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
 };
 
 const FormModal = ({
@@ -100,11 +100,11 @@ const FormModal = ({
     const bgColor = type === 'create' ? 'bg-encYellow' : type === 'update' ? 'bg-encSky' : 'bg-encPurple';
 
     const [open, setOpen] = useState(false);
-    console.log("Just received related Data", relatedData);
+    console.log("received related Data", relatedData);
 
     const Form = () => {
         console.log("Related Data not reaching form", relatedData);
-        
+
         const [state, FormAction] = useFormState(deleteActionMap[table], {
             success: false,
             error: false
@@ -132,7 +132,7 @@ const FormModal = ({
                     <button className='bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center'>Delete</button>
                 </form>
             ) : type === 'create' || type === 'update' ? (
-                forms[table](setOpen, type, data)
+                forms[table](setOpen, type, data, relatedData)
             ) : (
                 'Form Not found'
             )
