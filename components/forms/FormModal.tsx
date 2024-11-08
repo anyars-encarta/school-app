@@ -76,17 +76,17 @@ const AnnouncementForm = dynamic(() => import("./AnnouncementForm"), {
 const forms: {
     [key: string]: (setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any, relatedData?: any) => JSX.Element;
 } = {
-    teacher: (setOpen, type, data) => <TeacherForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    student: (setOpen, type, data) => <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    parent: (setOpen, type, data) => <ParentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    subject: (setOpen, type, data) => <SubjectForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    class: (setOpen, type, data) => <ClassForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    lesson: (setOpen, type, data) => <LessonForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    exam: (setOpen, type, data) => <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    assignment: (setOpen, type, data) => <AssignmentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    result: (setOpen, type, data) => <ResultForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    event: (setOpen, type, data) => <EventForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    announcement: (setOpen, type, data) => <AnnouncementForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    teacher: (setOpen, type, data, relatedData) => <TeacherForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    student: (setOpen, type, data, relatedData) => <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    parent: (setOpen, type, data, relatedData) => <ParentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    subject: (setOpen, type, data, relatedData) => <SubjectForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    class: (setOpen, type, data, relatedData) => <ClassForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    lesson: (setOpen, type, data, relatedData) => <LessonForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    exam: (setOpen, type, data, relatedData) => <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    assignment: (setOpen, type, data, relatedData) => <AssignmentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    result: (setOpen, type, data, relatedData) => <ResultForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    event: (setOpen, type, data, relatedData) => <EventForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    announcement: (setOpen, type, data, relatedData) => <AnnouncementForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
 };
 
 const FormModal = ({
