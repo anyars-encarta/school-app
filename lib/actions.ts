@@ -59,45 +59,45 @@ export const deleteSubject = async (currentState: CurrentState, data: FormData) 
 }
 
 export const deleteStudent = async (currentState: CurrentState, data: SubjectInputs) => {
-
+ console.log("Deleting student");
 };
 
 export const deleteParent = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting parent");
 };
 
 export const deleteTeacher = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting teacher");
 };
 
 export const deleteClass = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting class");
 };
 
 export const deleteLesson = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting lesson");
 };
 
 export const deleteExam = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting exam");
 };
 
 export const deleteAssignment = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting assignment");
 };
 
 export const deleteResult = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting result");
 };
 
 export const deleteEvent = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting event");
 };
 
 export const deleteAttendance = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting attendance");
 };
 
 export const deleteAnnouncement = async (currentState: CurrentState, data: SubjectInputs) => {
-
+    console.log("Deleting announcement");
 };

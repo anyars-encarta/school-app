@@ -25,8 +25,23 @@ const deleteActionMap = {
     result: deleteResult,
     attendance: deleteAttendance,
     event: deleteEvent,
-    announcement: deleteAnnouncement
+    announcement: deleteAnnouncement,
 };
+
+// const deleteActionMap = {
+//     subject: "deleteSubject",
+//     class: "Class will be deleted",
+//     teacher: "Teacher will be deleted",
+//     student: "Student will be deleted",
+//     parent: "Parent will be deleted",
+//     lesson: "Lesson will be deleted",
+//     exam: "Exam will be deleted",
+//     assignment: "Assignment will be deleted",
+//     result: "Result will be deleted",
+//     attendance: "Attendance will be deleted",
+//     event: "Event will be deleted",
+//     announcement: "Announcement will be deleted",
+// };
 
 // LAZY LOADING IMPORTS
 const TeacherForm = dynamic(() => import("./TeacherForm"), {
@@ -76,17 +91,19 @@ const AnnouncementForm = dynamic(() => import("./AnnouncementForm"), {
 const forms: {
     [key: string]: (setOpen: Dispatch<SetStateAction<boolean>>, type: 'create' | 'update', data?: any, relatedData?: any) => JSX.Element;
 } = {
-    teacher: (setOpen, type, data, relatedData) => <TeacherForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    student: (setOpen, type, data, relatedData) => <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    parent: (setOpen, type, data, relatedData) => <ParentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    subject: (setOpen, type, data, relatedData) => <SubjectForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    class: (setOpen, type, data, relatedData) => <ClassForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    lesson: (setOpen, type, data, relatedData) => <LessonForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    exam: (setOpen, type, data, relatedData) => <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    assignment: (setOpen, type, data, relatedData) => <AssignmentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    result: (setOpen, type, data, relatedData) => <ResultForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    event: (setOpen, type, data, relatedData) => <EventForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
-    announcement: (setOpen, type, data, relatedData) => <AnnouncementForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    subject: (setOpen, type, data, relatedData) => (
+        <SubjectForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
+    ),
+    // teacher: (setOpen, type, data, relatedData) => <TeacherForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // student: (setOpen, type, data, relatedData) => <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // parent: (setOpen, type, data, relatedData) => <ParentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // class: (setOpen, type, data, relatedData) => <ClassForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // lesson: (setOpen, type, data, relatedData) => <LessonForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // exam: (setOpen, type, data, relatedData) => <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // assignment: (setOpen, type, data, relatedData) => <AssignmentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // result: (setOpen, type, data, relatedData) => <ResultForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // event: (setOpen, type, data, relatedData) => <EventForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
+    // announcement: (setOpen, type, data, relatedData) => <AnnouncementForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />,
 };
 
 const FormModal = ({
@@ -100,14 +117,16 @@ const FormModal = ({
     const bgColor = type === 'create' ? 'bg-encYellow' : type === 'update' ? 'bg-encSky' : 'bg-encPurple';
 
     const [open, setOpen] = useState(false);
-    console.log("received related Data", relatedData);
-
+    
     const Form = () => {
         console.log("Related Data not reaching form", relatedData);
 
-        const [state, FormAction] = useFormState(deleteActionMap[table], {
+        // AFTER REACT 19, IT WILL BE USEACTIONSTATE
+        const selectedFunction = deleteActionMap[table];
+
+        const [state, FormAction] = useFormState(selectedFunction, {
             success: false,
-            error: false
+            error: false,
         });
 
         // const deleteSubjectHandler = handleSubmit((data) => {
@@ -118,25 +137,23 @@ const FormModal = ({
 
         useEffect(() => {
             if (state.success) {
-                toast(`Subject deleted successfully!`)
-                router.refresh();
+                toast(`${table} deleted successfully!`)
                 setOpen(false);
+                router.refresh();
             }
-        }, [state]);
+        }, [state, router]);
 
-        return (
-            type === 'delete' && id ? (
-                <form action={FormAction} className='p-4 flex flex-col gap-4'>
-                    <input type="text | number" name="id" value={id} hidden />
-                    <span className='text-center font-medium'>All data will be lost. Are you sure you want to delete this {table}?</span>
-                    <button className='bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center'>Delete</button>
-                </form>
-            ) : type === 'create' || type === 'update' ? (
-                forms[table](setOpen, type, data, relatedData)
-            ) : (
-                'Form Not found'
-            )
-        )
+        return type === 'delete' && id ? (
+            <form action={FormAction} className='p-4 flex flex-col gap-4'>
+                <input type="text | number" name="id" value={id} hidden />
+                <span className='text-center font-medium'>All data will be lost. Are you sure you want to delete this {table}?</span>
+                <button className='bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center'>Delete</button>
+            </form>
+        ) : type === 'create' || type === 'update' ? (
+            forms[table](setOpen, type, data, relatedData)
+        ) : (
+            'Form Not found'
+        );
     };
 
     return (
@@ -159,7 +176,7 @@ const FormModal = ({
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default FormModal
+export default FormModal;

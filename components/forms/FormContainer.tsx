@@ -43,6 +43,8 @@ const FormContainer = async ({
         }
     }
 
+    console.log("Related data showing in Form Container", relatedData);
+
     return (
         <FormModal table={table} type={type} data={data} id={id} relatedData={relatedData} />
     )
