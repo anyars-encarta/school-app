@@ -28,21 +28,6 @@ const deleteActionMap = {
     announcement: deleteAnnouncement,
 };
 
-// const deleteActionMap = {
-//     subject: "deleteSubject",
-//     class: "Class will be deleted",
-//     teacher: "Teacher will be deleted",
-//     student: "Student will be deleted",
-//     parent: "Parent will be deleted",
-//     lesson: "Lesson will be deleted",
-//     exam: "Exam will be deleted",
-//     assignment: "Assignment will be deleted",
-//     result: "Result will be deleted",
-//     attendance: "Attendance will be deleted",
-//     event: "Event will be deleted",
-//     announcement: "Announcement will be deleted",
-// };
-
 // LAZY LOADING IMPORTS
 const TeacherForm = dynamic(() => import("./TeacherForm"), {
     loading: () => <SpinnerLoader />
@@ -156,6 +141,7 @@ const FormModal = ({
         );
     };
 
+    console.log("Related data is finally here", relatedData);
     return (
         <>
             <button

@@ -36,10 +36,10 @@ const SubjectForm = ({ setOpen, type, data, relatedData }: { setOpen: Dispatch<S
     useEffect(() => {
         if (state.success) {
             toast(`Subject ${type === 'create' ? 'created' : 'updated'} successfully!`)
-            router.refresh();
             setOpen(false);
+            router.refresh();
         }
-    }, [state]);
+    }, [state, router, type, setOpen]);
 
     const {teachers} = relatedData;
 
@@ -85,9 +85,9 @@ const SubjectForm = ({ setOpen, type, data, relatedData }: { setOpen: Dispatch<S
                         ))}
                     </select>
 
-                    {errors.teachers?.message &&
+                    {errors.teachers?.message && (
                         <p className='text-xs text-red-500'>{errors.teachers.message.toString()}</p>
-                    }
+                    )}
                 </div>
             </div>
 
