@@ -10,7 +10,7 @@ export const createSubject = async (currentState: CurrentState, data: SubjectInp
             data: { 
                 name: data.name,
                 teachers: { 
-                    connect: data.teachers?.map((teacherId) => ({ id: teacherId })),
+                    connect: data.teachers.map((teacherId) => ({ id: teacherId })),
                 }
             }
         })
@@ -29,7 +29,7 @@ export const updateSubject = async (currentState: CurrentState, data: SubjectInp
             data: { 
                 name: data.name,
                 teachers: {
-                    set: data.teachers?.map((teacherId) => ({ id: teacherId })),
+                    set: data.teachers.map((teacherId) => ({ id: teacherId })),
                 }
             },
         });

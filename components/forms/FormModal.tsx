@@ -103,8 +103,10 @@ const FormModal = ({
 
     const [open, setOpen] = useState(false);
     
+    console.log("I can see the related data here", relatedData);
+
     const Form = () => {
-        console.log("Related Data not reaching form", relatedData);
+        console.log("Related data through Form props", relatedData);
 
         // AFTER REACT 19, IT WILL BE USEACTIONSTATE
         const selectedFunction = deleteActionMap[table];
@@ -126,7 +128,9 @@ const FormModal = ({
                 setOpen(false);
                 router.refresh();
             }
-        }, [state, router]);
+        }, [state, router, relatedData]);
+
+        console.log("Related Data not reaching form", relatedData);
 
         return type === 'delete' && id ? (
             <form action={FormAction} className='p-4 flex flex-col gap-4'>
@@ -142,6 +146,7 @@ const FormModal = ({
     };
 
     console.log("Related data is finally here", relatedData);
+
     return (
         <>
             <button
