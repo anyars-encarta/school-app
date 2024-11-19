@@ -11,6 +11,7 @@ import { Lesson, Prisma, Subject, Teacher } from '@prisma/client';
 import prisma from '@/prisma';
 import { ITEM_PER_PAGE } from '@/lib/settings';
 import { getAuthData } from '@/lib/utils';
+import FormContainer from '@/components/forms/FormContainer';
 
 type subjectList = Subject & { teachers: Teacher[] } & { lessons: Lesson[] };
 
@@ -27,14 +28,14 @@ const renderRow = (item: subjectList, role: string) => (
                         {/* <button className='flex items-center justify-center rounded-full bg-encSky'>
                                 <Image src='/update.png' alt='' width={16} height={16} />
                             </button> */}
-                        <FormModal table='subject' type='update' data={item} />
+                        <FormContainer table='subject' type='update' data={item} />
                         {/* </Link> */}
 
 
                         {/* <button className='flex items-center justify-center rounded-full bg-encPurple'>
                             <Image src='/delete.png' alt='' width={16} height={16} />
                         </button> */}
-                        <FormModal table='subject' type='delete' id={item.id} />
+                        <FormContainer table='subject' type='delete' id={item.id} />
                     </>
                 )}
             </div>

@@ -1,17 +1,18 @@
 import { CustomInputFieldParams } from '@/app/types';
 
-const CustomInputField = ({ 
-    label, 
-    type = 'text', 
-    register, 
-    name, 
-    defaultValue, 
-    error, 
-    inputProps 
+const CustomInputField = ({
+    label,
+    type = 'text',
+    register,
+    name,
+    defaultValue,
+    error,
+    hidden,
+    inputProps
 }: CustomInputFieldParams) => {
 
     return (
-        <div className='flex flex-col gap-2 w-full md:w-1/4'>
+        <div className={hidden ? "hidden" : "flex flex-col gap-2 w-full md:w-1/4"}>
             <label htmlFor={name} className='text-xs text-gray-500'>
                 {label}
             </label>

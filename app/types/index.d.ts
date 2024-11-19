@@ -112,5 +112,6 @@ declare type CustomInputFieldParams = {
     name: string;
     defaultValue?: string;
     error?: FieldError;
+    hidden?: boolean;
     inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
