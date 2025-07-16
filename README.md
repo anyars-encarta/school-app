@@ -40,8 +40,6 @@
 # 📖 E-Montessori<a name="about-project"></a>
 
 > E-Montessori is a School Management System where users could set schedules for Teachers and Students. Parents could also login to check the schedules, assignments, lessons, and exams of their wards.
->
-> Parents
 
 ## 🛠 Built With <a name="built-with"></a>
 1. React
