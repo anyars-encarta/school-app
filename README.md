@@ -4,7 +4,7 @@
 
  <!-- LOGO -->
 
-  <img src="/front-end/public/banner.png" alt="logo" width="160"  height="auto" />
+  <img src="/banner.png" alt="logo" width="160"  height="auto" />
   <br/>
 
 <!-- MAIN HEADING -->
